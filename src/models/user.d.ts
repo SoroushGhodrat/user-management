@@ -5,10 +5,11 @@ export type Status = 'active' | 'inactive' | 'blocked' | 'invited';
 // interfaces
 export interface User {
     id: string;
-    image: string;
+    image: string | undefined;
     name: string;
     family: string;
     role: Role;
+    isOwner: boolean;
     email: string;
     createdOn: string;
     countryCode: string;

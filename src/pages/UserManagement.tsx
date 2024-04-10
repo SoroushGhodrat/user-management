@@ -1,9 +1,6 @@
-import Tabs from "@mui/joy/Tabs";
-import TabList from "@mui/joy/TabList";
+import {Tabs, TabList, TabPanel, Box} from "@mui/joy";
 import Tab, { tabClasses } from "@mui/joy/Tab";
-import TabPanel from "@mui/joy/TabPanel";
 import { useState } from "react";
-import Box from "@mui/joy/Box";
 import Users from "../components/Admin/Users";
 
 const UserManagement: React.FC = () => {

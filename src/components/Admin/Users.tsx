@@ -20,7 +20,7 @@ import {
   FormControl,
   Select,
 } from "@mui/joy";
-
+import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
 import {
   Person,
   DeleteForever,
@@ -152,17 +152,9 @@ const Users: React.FC = () => {
 
   console.log("data", data);
 
-  console.log("isError", isError);
-  console.log("error", error?.message);
-
   return (
     <>
-      {isLoading && (
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button loading variant="plain" />
-          <Typography level="title-md">Loading user's data</Typography>
-        </Box>
-      )}
+      {isLoading && <CustomSkeleton />}
 
       {isError && <Typography>Error: {error.message}</Typography>}
 
@@ -185,7 +177,6 @@ const Users: React.FC = () => {
               <PeopleOutline />
               <Typography level="title-lg">Users</Typography>
             </Stack>
-
             <Button>Invite users</Button>
           </Box>
 

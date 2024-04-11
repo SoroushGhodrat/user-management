@@ -88,9 +88,13 @@ const AnimationSkeleton = () => {
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
+        <Button>
+          Read more
+          <Skeleton animation="wave" />
+        </Button>
       </Card>
     </Stack>
   );
-}
+};
 
 export default AnimationSkeleton;

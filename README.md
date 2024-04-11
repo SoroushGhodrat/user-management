@@ -15,17 +15,13 @@ Before you begin, ensure you have met the following requirements:
 
 To run this project, follow these steps:
 
-1. Open your terminal.
-
-2. Navigate to the project directory.
-
-3. Run the server by entering the following command:
+1. Open your terminal, navigate to the project directory and run the JSON Server by entering the following command:
 
 ```bash
 npm run server
 ```
 
-4. Open a new terminal tab or window, navigate to the project directory again, and run the app by entering the following command:
+2. Open a new terminal, navigate to the project directory again, and run the app by entering the following command:
 
 ```bash
 npm run server

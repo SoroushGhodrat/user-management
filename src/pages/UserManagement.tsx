@@ -1,7 +1,8 @@
-import {Tabs, TabList, TabPanel, Box} from "@mui/joy";
+import { Tabs, TabList, TabPanel, Box } from "@mui/joy";
 import Tab, { tabClasses } from "@mui/joy/Tab";
 import { useState } from "react";
 import Users from "../components/Admin/Users";
+import UserRoles from "../components/Admin/UserRoles";
 
 const UserManagement: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
@@ -11,13 +12,13 @@ const UserManagement: React.FC = () => {
       <Tabs
         aria-label="Pipeline"
         value={index}
-        onChange={(event, value) => setIndex(value as number)}
+        onChange={(_event, value) => setIndex(value as number)}
       >
         <TabList
           sx={{
             pt: 1,
             justifyContent: "left",
-            [`&& .${tabClasses.root}`]: { 
+            [`&& .${tabClasses.root}`]: {
               flex: "initial",
               bgcolor: "transparent",
               "&:hover": {
@@ -51,7 +52,9 @@ const UserManagement: React.FC = () => {
           <TabPanel value={0}>
             <Users />
           </TabPanel>
-          <TabPanel value={1}>user roles table</TabPanel>
+          <TabPanel value={1}>
+            <UserRoles />
+          </TabPanel>
         </Box>
       </Tabs>
     </div>

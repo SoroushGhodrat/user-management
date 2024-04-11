@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchUsers } from "../../store/features/users/usersSlice";
 
-const Users: React.FC = () => {
+const UserRoles: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const headers = [
@@ -72,7 +72,7 @@ const Users: React.FC = () => {
               <PeopleOutline />
               <Typography level="title-lg">Users</Typography>
             </Stack>
-            <Button>Invite users</Button>
+            <Button>New user role</Button>
           </Box>
 
           <Divider />
@@ -149,4 +149,4 @@ const Users: React.FC = () => {
   );
 };
 
-export default Users;
+export default UserRoles;

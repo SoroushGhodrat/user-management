@@ -1,15 +1,13 @@
 import "./App.css";
 import Admin from "./pages/Admin";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import  {store}  from "./store";
+import { Provider } from "react-redux";
 
 const App: React.FC = () => {
-  const queryClient = new QueryClient();
   return (
-    <QueryClientProvider client={queryClient}>
+    <Provider store={store}>
       <Admin />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    </Provider>
   );
 };
 

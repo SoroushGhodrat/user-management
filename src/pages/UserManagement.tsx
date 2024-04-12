@@ -8,7 +8,7 @@ const UserManagement: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
 
   return (
-    <div>
+    <Box>
       <Tabs
         aria-label="Pipeline"
         value={index}
@@ -57,7 +57,7 @@ const UserManagement: React.FC = () => {
           </TabPanel>
         </Box>
       </Tabs>
-    </div>
+    </Box>
   );
 };
 

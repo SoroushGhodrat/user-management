@@ -15,7 +15,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import Add from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
-import { emailValidator } from "../../helper/helper";
+import { emailValidator } from "../../utils/helpers/index";
 
 type DeleteModalProps = {
   isOpen: boolean;

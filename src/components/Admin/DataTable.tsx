@@ -39,7 +39,7 @@ import {
   phoneFormater,
   dateFormater,
   firstLetterUppercase,
-} from "../../helper/helper";
+} from "../../utils/helpers/index";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchUsers } from "../../store/features/users/usersSlice";

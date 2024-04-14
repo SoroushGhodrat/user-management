@@ -35,13 +35,17 @@ import {
   ForwardToInboxOutlined,
 } from "@mui/icons-material";
 import { User } from "../../models/user";
-import { phoneFormater, dateFormater } from "../../helper/helper";
+import {
+  phoneFormater,
+  dateFormater,
+  firstLetterUppercase,
+} from "../../helper/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchUsers } from "../../store/features/users/usersSlice";
 import CustomSkeleton from "../UI/CustomSkeleton";
 import StatusChip from "../UI/StatusChip";
-import DeleteModal from "./DeleteModal";
+import UserDeleteModal from "./UserDeleteModal";
 import EditUserModal from "./EditUserModal";
 import UserInvitedModal from "./UserInvitedModal";
 
@@ -96,7 +100,7 @@ const TableRow: React.FC<{
 
   return (
     <>
-      <DeleteModal
+      <UserDeleteModal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         user={user}
@@ -144,7 +148,7 @@ const TableRow: React.FC<{
                 </Typography>
               </Box>
             </td>
-            <td>{role}</td>
+            <td>{firstLetterUppercase(role)}</td>
             <td>{email}</td>
             <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
             <td>{`${countryCode} ${phoneFormater(phone)}`}</td>

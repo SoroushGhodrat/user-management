@@ -19,15 +19,20 @@ import {
   deleteUser,
   setDeleteUserStatus,
 } from "../../store/features/users/usersSlice";
+import { AppDispatch } from "../../store";
 
-type DeleteModalProps = {
+type UserDeleteModalProps = {
   isOpen: boolean;
   onClose: () => void;
   user: User;
 };
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, user }) => {
-  const dispatch = useDispatch();
+const UserDeleteModal: React.FC<UserDeleteModalProps> = ({
+  isOpen,
+  onClose,
+  user,
+}) => {
+  const dispatch: AppDispatch = useDispatch();
 
   const handleDeleteUser = (userId: string) => {
     dispatch(deleteUser(userId));
@@ -89,4 +94,4 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, user }) => {
   );
 };
 
-export default DeleteModal;
+export default UserDeleteModal;

@@ -70,6 +70,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({
     }));
   };
 
+  // dispatch the updated user to the store
   const handleUpdateUser = () => {
     const updatedUser = {
       ...user,

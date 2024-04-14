@@ -1,14 +1,17 @@
+import { Box, Typography } from "@mui/joy";
 import UserManagement from "./UserManagement";
 
 const Admin: React.FC = () => {
   return (
-    <div>
+    <Box sx={{ bgcolor: "#FBFCFE", p: 2, borderRadius: 20 }} color="#31284F">
       <header>
-        <h4>User management</h4>
-        <p>Invite, manage and update users.</p>
+        <Typography level="h3">User management</Typography>
+        <Typography level="body-md" sx={{ py: 2 }}>
+          Invite, manage and update users.
+        </Typography>
       </header>
       <UserManagement />
-    </div>
+    </Box>
   );
 };
 

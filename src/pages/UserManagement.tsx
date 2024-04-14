@@ -70,7 +70,7 @@ const UserManagement: React.FC = () => {
           sx={(theme) => ({
             "--bg": theme.vars.palette.background.surface,
             background: "var(--bg)",
-            boxShadow: "0 0 0 100vmax var(--bg)",
+            // boxShadow: "0 0 0 100vmax var(--bg)",
             clipPath: "inset(0 -100vmax)",
           })}
         >

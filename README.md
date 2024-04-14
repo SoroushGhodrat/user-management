@@ -72,9 +72,9 @@ When a DELETE action is performed, the corresponding user will be removed from t
 
 This project uses the following dependencies:
 
-- `react`: Version 18.2.0 or above
-- `react-redux`: Version 9.1.0 or above
-- `@mui/joy`: Version 5.0.0-beta.32 or above
-- `@mui/material`: Version 5.15.15 or above
-- `typescript`: Version 5.2.2 or above
-- `vite`: Version 5.2.0 or above
+- `React`: Version 18.2.0
+- `React Redux`: Version 9.1.0 
+- `Joy UI`: Version 5.0.0-beta.32
+- `Material Icons`: Version 5.15.15
+- `Typescript`: Version 5.2.2
+- `Vite`: Version 5.2.0

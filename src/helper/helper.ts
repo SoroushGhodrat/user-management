@@ -6,3 +6,9 @@ export const dateFormater = (date: string): string => {
   const d = new Date(date);
   return `${d.getDate()} ${d.toLocaleString("default", { month: "long" })} ${d.getFullYear()}`;
 };
+
+export const emailValidator = (email: string): boolean => {
+  const regex =
+    /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+};

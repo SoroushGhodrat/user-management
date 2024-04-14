@@ -23,7 +23,6 @@ import {
   Stack,
   Table,
   Typography,
-  Snackbar,
 } from "@mui/joy";
 import {
   DeleteForever,
@@ -33,6 +32,7 @@ import {
   PeopleOutline,
   Person,
   ViewWeekOutlined,
+  ForwardToInboxOutlined,
 } from "@mui/icons-material";
 import { User } from "../../models/user";
 import { phoneFormater, dateFormater } from "../../helper/helper";
@@ -42,7 +42,8 @@ import { fetchUsers } from "../../store/features/users/usersSlice";
 import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
 import StatusChip from "../UI/StatusChip";
 import DeleteModal from "../UI/DeleteModal";
-import zIndex from "@mui/material/styles/zIndex";
+import EditUserModal from "./EditUserModal";
+import UserInvitedModal from "./UserInvitedModal";
 
 type TabName = "users" | "userRoles";
 interface DataTableProps {
@@ -70,8 +71,16 @@ const TableRow: React.FC<{
   const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
     user;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);
+  };
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+  const openInviteModal = () => {
+    setIsInviteModalOpen(true);
   };
 
   return (
@@ -81,6 +90,15 @@ const TableRow: React.FC<{
         onClose={() => setIsDeleteModalOpen(false)}
         user={user}
       />
+
+      <EditUserModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        user={user}
+      />
+
+      <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
+
       <tr key={id}>
         {tabName === "users" && (
           <>
@@ -120,17 +138,28 @@ const TableRow: React.FC<{
               <StatusChip status={status}>{status}</StatusChip>
             </td>
             <td>
+              {/* Actions */}
               <Dropdown>
                 <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
-                  <MenuItem onClick={handleEditUser}>
+                  {status === "invited" && (
+                    <MenuItem onClick={openInviteModal}>
+                      <ListItemDecorator>
+                        <ForwardToInboxOutlined />
+                      </ListItemDecorator>
+                      Resend invite
+                    </MenuItem>
+                  )}
+
+                  <MenuItem onClick={openEditModal}>
                     <ListItemDecorator>
                       <Edit />
                     </ListItemDecorator>
                     Edit
                   </MenuItem>
+
                   <ListDivider />
                   <MenuItem variant="soft" color="danger" onClick={openDeleteModal}>
                     <ListItemDecorator sx={{ color: "inherit" }}>

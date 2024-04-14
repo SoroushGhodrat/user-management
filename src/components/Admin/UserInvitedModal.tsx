@@ -51,9 +51,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
 
   const handleDeleteEmail = (email_id: number) => {
     return () => {
-      setEmailsList((prevEmails) =>
-        prevEmails.filter((email) => email.id !== email_id),
-      );
+      setEmailsList((prevEmails) => prevEmails.filter((email) => email.id !== email_id));
     };
   };
 
@@ -61,16 +59,9 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
     console.log("invitation sent!", emailsList);
   };
 
-  console.log("ssss", emailsList);
-
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog
-        variant="outlined"
-        role="alertdialog"
-        size={"lg"}
-        sx={{ p: 3, minWidth: 500 }}
-      >
+      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 500 }}>
         <DialogTitle
           sx={{
             display: "flex",
@@ -93,12 +84,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
           {/* Added email's list */}
           {emailsList.length !== 0 &&
             emailsList.map((email) => (
-              <Box
-                key={email.id}
-                display="flex"
-                justifyContent="space-between"
-                sx={{ mb: 2 }}
-              >
+              <Box key={email.id} display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
                 <Input
                   name="email"
                   type="email"
@@ -154,9 +140,9 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
           <Button
             disabled={emailsList.length === 0}
             variant="solid"
-            style={{
-              backgroundColor: emailsList.length === 0 ? "neutral" : "#3E8A8B",
-              color: emailsList.length === 0 ? "neutral" : "white",
+            sx={{
+              backgroundColor: emailsList.length < 0 ? "neutral" : "#3E8A8B",
+              color: emailsList.length < 0 ? "neutral" : "white",
             }}
             onClick={handleSentInvitation}
           >

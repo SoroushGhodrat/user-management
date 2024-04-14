@@ -58,7 +58,7 @@ interface DataTableProps {
   handleChangePage: (newPage: number) => void;
   handleChangeRowsPerPage: (
     event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-    value: number | null,
+    value: number | null
   ) => void;
 }
 
@@ -68,19 +68,8 @@ const TableRow: React.FC<{
   handleEditUser: () => void;
   handleDeleteUser: () => void;
 }> = ({ user, tabName, handleEditUser, handleDeleteUser }) => {
-  const {
-    id,
-    image,
-    name,
-    family,
-    isOwner,
-    role,
-    email,
-    createdOn,
-    countryCode,
-    phone,
-    status,
-  } = user;
+  const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
+    user;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -108,10 +97,7 @@ const TableRow: React.FC<{
         user={user}
       />
 
-      <UserInvitedModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-      />
+      <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
 
       <tr key={id}>
         {tabName === "users" && (
@@ -154,10 +140,7 @@ const TableRow: React.FC<{
             <td>
               {/* Actions */}
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
@@ -178,11 +161,7 @@ const TableRow: React.FC<{
                   </MenuItem>
 
                   <ListDivider />
-                  <MenuItem
-                    variant="soft"
-                    color="danger"
-                    onClick={openDeleteModal}
-                  >
+                  <MenuItem variant="soft" color="danger" onClick={openDeleteModal}>
                     <ListItemDecorator sx={{ color: "inherit" }}>
                       <DeleteForever />
                     </ListItemDecorator>
@@ -203,10 +182,7 @@ const TableRow: React.FC<{
             <td>{status}</td>
             <td>
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
@@ -217,11 +193,7 @@ const TableRow: React.FC<{
                     Edit post
                   </MenuItem>
                   <ListDivider />
-                  <MenuItem
-                    variant="soft"
-                    color="danger"
-                    onClick={handleDeleteUser}
-                  >
+                  <MenuItem variant="soft" color="danger" onClick={handleDeleteUser}>
                     <ListItemDecorator sx={{ color: "inherit" }}>
                       <DeleteForever />
                     </ListItemDecorator>
@@ -251,7 +223,7 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { users, isLoading, isError, errorMessage, isSuccess } = useSelector(
-    (state: RootState) => state.users,
+    (state: RootState) => state.users
   );
 
   useEffect(() => {
@@ -265,10 +237,7 @@ const DataTable: React.FC<DataTableProps> = ({
       {isError && <Typography color="danger">Error: {errorMessage}</Typography>}
 
       {!isLoading && isSuccess && (
-        <Sheet
-          variant="outlined"
-          sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}
-        >
+        <Sheet variant="outlined" sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}>
           <Box
             sx={{
               display: "flex",
@@ -280,19 +249,16 @@ const DataTable: React.FC<DataTableProps> = ({
               mx: 2,
             }}
           >
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
+            <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
               <PeopleOutline />
               <Typography level="title-lg">
                 {tabName === "users" ? "Users" : "User roles"}
               </Typography>
             </Stack>
-            {tabName === "users" && <Button>New user</Button>}
-            {tabName === "userRoles" && <Button>New user role</Button>}
+            {tabName === "users" && <Button sx={{ backgroundColor: "#3E8A8B" }}>New user</Button>}
+            {tabName === "userRoles" && (
+              <Button sx={{ backgroundColor: "#3E8A8B" }}>New user role</Button>
+            )}
           </Box>
 
           <Divider />
@@ -384,10 +350,7 @@ const DataTable: React.FC<DataTableProps> = ({
             {/* Table footer */}
             <tfoot>
               <tr>
-                <td
-                  colSpan={headers.length}
-                  style={{ backgroundColor: "white" }}
-                >
+                <td colSpan={headers.length} style={{ backgroundColor: "white" }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -401,7 +364,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     <Typography>
                       {`Showing ${(pageNumber - 1) * rowsPerPage + 1} to ${Math.min(
                         pageNumber * rowsPerPage,
-                        totalRows,
+                        totalRows
                       )} of ${totalRows}`}
                     </Typography>
 
@@ -422,9 +385,7 @@ const DataTable: React.FC<DataTableProps> = ({
                         size="sm"
                         color="neutral"
                         variant="plain"
-                        disabled={
-                          pageNumber >= Math.ceil(totalRows / rowsPerPage)
-                        }
+                        disabled={pageNumber >= Math.ceil(totalRows / rowsPerPage)}
                         onClick={() => handleChangePage(pageNumber + 1)}
                         sx={{ bgcolor: "background.surface" }}
                       >

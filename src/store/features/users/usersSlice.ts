@@ -85,6 +85,35 @@ export const deleteUser = createAsyncThunk(
   },
 );
 
+export const deleteMultipleUsers = createAsyncThunk(
+  "users/deleteMultipleUsers",
+  async (userIds: string[], { rejectWithValue }) => {
+    try {
+      const responses = await Promise.all(
+        userIds.map((userId) =>
+          axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`),
+        ),
+      );
+
+      // Check if all delete operations were successful
+      if (responses.some((response) => response.status !== 200)) {
+        return rejectWithValue("Failed to delete one or more users");
+      }
+
+      return userIds;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (!err.response) {
+          throw err;
+        }
+        return rejectWithValue(err.response.data);
+      } else {
+        throw err;
+      }
+    }
+  },
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -138,7 +167,7 @@ const usersSlice = createSlice({
         state.isError = true;
         state.errorMessage = action.error.message;
       });
-    // Delete user
+    // Delete a single user
     builder
       .addCase(deleteUser.pending, (state) => {
         state.isLoading = true;
@@ -149,6 +178,22 @@ const usersSlice = createSlice({
         state.isDeleteUserSuccess = true;
       })
       .addCase(deleteUser.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+    // Delete multiple users
+    builder
+      .addCase(deleteMultipleUsers.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteMultipleUsers.fulfilled, (state, action) => {
+        state.users = state.users.filter(
+          (user) => !action.payload.includes(user.id),
+        );
+        state.isLoading = false;
+        state.isDeleteUserSuccess = true;
+      })
+      .addCase(deleteMultipleUsers.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });

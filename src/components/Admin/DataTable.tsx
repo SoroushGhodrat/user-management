@@ -42,7 +42,11 @@ import {
 } from "@/utils/helpers/index";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
-import { fetchUsers } from "@/store/features/users/usersSlice";
+import {
+  deleteMultipleUsers,
+  fetchUsers,
+} from "@/store/features/users/usersSlice";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CustomSkeleton from "@/components/UI/CustomSkeleton";
 import StatusChip from "@/components/UI/StatusChip";
 import UserDeleteModal from "./UserDeleteModal";
@@ -67,7 +71,16 @@ interface DataTableProps {
 const TableRow: React.FC<{
   user: User;
   tabName: TabName;
-}> = ({ user, tabName }) => {
+  handleMultipleDelete: (id: string) => void;
+  isRowSelected: boolean;
+  toggleRowSelected: () => void;
+}> = ({
+  user,
+  tabName,
+  handleMultipleDelete,
+  isRowSelected,
+  toggleRowSelected,
+}) => {
   const {
     id,
     image,
@@ -84,6 +97,7 @@ const TableRow: React.FC<{
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  // const [isRowSelected, setIsRowSelected] = useState(false);
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true);
   };
@@ -92,6 +106,11 @@ const TableRow: React.FC<{
   };
   const openInviteModal = () => {
     setIsInviteModalOpen(true);
+  };
+
+  const handleCheckboxChange = () => {
+    handleMultipleDelete(id);
+    toggleRowSelected();
   };
 
   return (
@@ -113,11 +132,20 @@ const TableRow: React.FC<{
         onClose={() => setIsInviteModalOpen(false)}
       />
 
-      <tr key={id}>
+      <tr
+        key={id}
+        style={{ backgroundColor: isRowSelected ? "#e1eded" : "transparent" }}
+      >
         {tabName === "users" && (
           <>
             <td>
-              <Checkbox label="" variant="outlined" size="sm" />
+              <Checkbox
+                label=""
+                variant="outlined"
+                size="sm"
+                checked={isRowSelected}
+                onChange={handleCheckboxChange}
+              />
             </td>
             <td>
               <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
@@ -262,6 +290,33 @@ const DataTable: React.FC<DataTableProps> = ({
     setIsInviteModalOpen(true);
   };
 
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>({});
+
+  const toggleRowSelected = (id: string) => {
+    setSelectedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const handleMultipleDelete = (id: string) => {
+    setSelectedIds((prevIds) => {
+      if (prevIds.includes(id)) {
+        // If the id is already in the array, remove it
+        return prevIds.filter((prevId) => prevId !== id);
+      } else {
+        // If the id is not in the array, add it
+        return [...prevIds, id];
+      }
+    });
+  };
+
+  const handleDeleteMultiple = () => {
+    dispatch(deleteMultipleUsers(selectedIds));
+    setSelectedIds([]);
+  };
+
+  console.log(selectedIds);
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
@@ -375,6 +430,37 @@ const DataTable: React.FC<DataTableProps> = ({
 
           <Divider />
 
+          {/* Multiple user delition  */}
+          {selectedIds.length > 0 && (
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: 1,
+
+                backgroundColor: "#e1eded",
+              }}
+            >
+              <Typography sx={{ color: "#3E8A8B", m: 2 }}>
+                {selectedIds.length} rows selected
+              </Typography>
+
+              <Button
+                sx={{ m: 2 }}
+                color="danger"
+                variant="soft"
+                onClick={handleDeleteMultiple}
+                startDecorator={<DeleteOutlineOutlinedIcon />}
+              >
+                Delete
+              </Button>
+            </Box>
+          )}
+
+          <Divider />
+
           <Table
             hoverRow={true}
             aria-label="users table"
@@ -395,7 +481,19 @@ const DataTable: React.FC<DataTableProps> = ({
             {/* Table rows */}
             <tbody>
               {usersOnCurrentPage?.map((user) => (
-                <TableRow key={user.id} user={user} tabName={tabName} />
+                <TableRow
+                  key={user.id}
+                  user={user}
+                  tabName={tabName}
+                  handleMultipleDelete={handleMultipleDelete}
+                  isRowSelected={selectedRows[user.id] || false}
+                  toggleRowSelected={() => {
+                    setSelectedRows((prev) => ({
+                      ...prev,
+                      [user.id]: !prev[user.id],
+                    }));
+                  }}
+                />
               ))}
             </tbody>
 

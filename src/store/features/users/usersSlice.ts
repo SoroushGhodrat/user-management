@@ -24,11 +24,9 @@ const initialState: UsersState = {
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await new Promise<AxiosResponse<User[]>>((resolve) =>
     setTimeout(async () => {
-      const result = await axios.get<User[]>(
-        "http://localhost:8000/DUMMY_USERS",
-      );
+      const result = await axios.get<User[]>("http://localhost:8000/DUMMY_USERS");
       resolve(result);
-    }, 2000),
+    }, 2000)
   );
 
   return response.data;
@@ -37,13 +35,21 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
 // Async thunk for updating user
 export const updateUser = createAsyncThunk(
   "users/updateUser",
-  async (user: User) => {
-    const response = await axios.put<User>(
-      `http://localhost:8000/DUMMY_USERS/${user.id}`,
-      user,
-    );
-    return response.data;
-  },
+  async (user: User, { rejectWithValue }) => {
+    try {
+      const response = await axios.put<User>(`http://localhost:8000/DUMMY_USERS/${user.id}`, user);
+      return response.data;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (!err.response) {
+          throw err;
+        }
+        return rejectWithValue(err.response.data);
+      } else {
+        throw err;
+      }
+    }
+  }
 );
 
 // Async thunk for deleting user
@@ -53,10 +59,17 @@ export const deleteUser = createAsyncThunk(
     try {
       await axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`);
       return userId;
-    } catch (err: any) {
-      return rejectWithValue(err.response.data);
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        if (!err.response) {
+          throw err;
+        }
+        return rejectWithValue(err.response.data);
+      } else {
+        throw err;
+      }
     }
-  },
+  }
 );
 
 const usersSlice = createSlice({
@@ -105,7 +118,7 @@ const usersSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.users = state.users.map((user) =>
-          user.id === action.payload.id ? action.payload : user,
+          user.id === action.payload.id ? action.payload : user
         );
         state.isLoading = false;
         state.isSuccess = true;
@@ -132,12 +145,7 @@ const usersSlice = createSlice({
   },
 });
 
-export const {
-  setLoading,
-  setError,
-  setErrorMsg,
-  setSuccess,
-  setDeleteUserStatus,
-} = usersSlice.actions;
+export const { setLoading, setError, setErrorMsg, setSuccess, setDeleteUserStatus } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

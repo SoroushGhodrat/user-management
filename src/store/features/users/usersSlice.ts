@@ -57,7 +57,13 @@ export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async (userId: string, { rejectWithValue }) => {
     try {
-      await axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`);
+      const response = await axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`);
+      
+      // Check if the delete operation was successful
+      if (response.status !== 200) {
+        return rejectWithValue('Failed to delete user');
+      }
+
       return userId;
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
@@ -87,9 +93,6 @@ const usersSlice = createSlice({
     },
     setSuccess: (state, action: PayloadAction<boolean>) => {
       state.isSuccess = action.payload;
-    },
-    deleteUser: (state, action: PayloadAction<string>) => {
-      state.users = state.users.filter((user) => user.id !== action.payload);
     },
     setDeleteUserStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleteUserSuccess = action.payload;
@@ -134,9 +137,9 @@ const usersSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = state.users.filter((user) => user.id !== action.payload);
         state.isLoading = false;
         state.isDeleteUserSuccess = true;
-        state.users = state.users.filter((user) => user.id !== action.payload);
       })
       .addCase(deleteUser.rejected, (state) => {
         state.isLoading = false;

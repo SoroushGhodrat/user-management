@@ -57,8 +57,6 @@ interface DataTableProps {
   rowsPerPage: number;
   totalRows: number;
   tabName: TabName;
-  handleEditUser: (userId: string) => void;
-  handleDeleteUser: (userId: string) => void;
   handleChangePage: (newPage: number) => void;
   handleChangeRowsPerPage: (
     event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
@@ -69,9 +67,7 @@ interface DataTableProps {
 const TableRow: React.FC<{
   user: User;
   tabName: TabName;
-  handleEditUser: () => void;
-  handleDeleteUser: () => void;
-}> = ({ user, tabName, handleEditUser, handleDeleteUser }) => {
+}> = ({ user, tabName }) => {
   const {
     id,
     image,
@@ -214,7 +210,8 @@ const TableRow: React.FC<{
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
-                  <MenuItem onClick={handleEditUser}>
+                  {/* <MenuItem onClick={handleEditUser}> */}
+                  <MenuItem>
                     <ListItemDecorator>
                       <Edit />
                     </ListItemDecorator>
@@ -224,7 +221,7 @@ const TableRow: React.FC<{
                   <MenuItem
                     variant="soft"
                     color="danger"
-                    onClick={handleDeleteUser}
+                    // onClick={handleDeleteUser}
                   >
                     <ListItemDecorator sx={{ color: "inherit" }}>
                       <DeleteForever />
@@ -250,13 +247,15 @@ const DataTable: React.FC<DataTableProps> = ({
   handleChangePage,
   handleChangeRowsPerPage,
   usersOnCurrentPage,
-  handleEditUser,
-  handleDeleteUser,
 }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const { users, isLoading, isError, errorMessage, isSuccess } = useSelector(
-    (state: RootState) => state.users,
-  );
+  const {
+    // users,
+    isLoading,
+    isError,
+    errorMessage,
+    isSuccess,
+  } = useSelector((state: RootState) => state.users);
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const openInviteModal = () => {
@@ -320,6 +319,7 @@ const DataTable: React.FC<DataTableProps> = ({
 
           <Divider />
 
+          {/* Table view mode and search bar */}
           <Box
             sx={{
               display: "flex",
@@ -374,6 +374,7 @@ const DataTable: React.FC<DataTableProps> = ({
           </Box>
 
           <Divider />
+
           <Table
             hoverRow={true}
             aria-label="users table"
@@ -391,16 +392,10 @@ const DataTable: React.FC<DataTableProps> = ({
               </tr>
             </thead>
 
-            {/* Table body */}
+            {/* Table rows */}
             <tbody>
               {usersOnCurrentPage?.map((user) => (
-                <TableRow
-                  key={user.id}
-                  user={user}
-                  tabName={tabName}
-                  handleEditUser={() => handleEditUser(user.id)}
-                  handleDeleteUser={() => handleDeleteUser(user.id)}
-                />
+                <TableRow key={user.id} user={user} tabName={tabName} />
               ))}
             </tbody>
 

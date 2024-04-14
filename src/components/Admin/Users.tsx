@@ -34,14 +34,6 @@ const Users: React.FC = () => {
     setPageNumber(newPage);
   };
 
-  const handleEditUser = (userId: string) => {
-    console.log(`user id: ${userId} to edit action`);
-  };
-
-  const handleDeleteUser = (userId: string) => {
-    console.log(`user id: ${userId} to delete action`);
-  };
-
   const usersOnCurrentPage = users.slice(
     (pageNumber - 1) * rowsPerPage,
     pageNumber * rowsPerPage,
@@ -60,8 +52,6 @@ const Users: React.FC = () => {
       handleChangePage={handleChangePage}
       handleChangeRowsPerPage={handleChangeRowsPerPage}
       usersOnCurrentPage={usersOnCurrentPage}
-      handleEditUser={handleEditUser}
-      handleDeleteUser={handleDeleteUser}
       tabName="users"
     />
   );

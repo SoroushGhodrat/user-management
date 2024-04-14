@@ -5,7 +5,7 @@ export type Role =
   | "project manager"
   | "technical manager"
   | "supervisor";
-  
+
 export type Status = "active" | "inactive" | "blocked" | "invited";
 
 // interfaces

@@ -28,9 +28,19 @@ type EditUserModalProps = {
 };
 
 // role value should call from backend through API
-const role: Role[] = ["admin", "electrician", "project manager", "technical manager", "supervisor"];
+const role: Role[] = [
+  "admin",
+  "electrician",
+  "project manager",
+  "technical manager",
+  "supervisor",
+];
 
-const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) => {
+const EditUserModal: React.FC<EditUserModalProps> = ({
+  isOpen,
+  onClose,
+  user,
+}) => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [formValues, setFormValues] = useState({
@@ -50,7 +60,10 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) 
     }));
   };
 
-  const handleSelectChange = (_event: React.SyntheticEvent | null, newValue: string | null) => {
+  const handleSelectChange = (
+    _event: React.SyntheticEvent | null,
+    newValue: string | null,
+  ) => {
     setFormValues((prevValues) => ({
       ...prevValues,
       role: newValue as Role,
@@ -67,7 +80,12 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) 
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 700 }}>
+      <ModalDialog
+        variant="outlined"
+        role="alertdialog"
+        size={"lg"}
+        sx={{ p: 3, minWidth: 700 }}
+      >
         <DialogTitle
           sx={{
             display: "flex",
@@ -125,7 +143,11 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) 
 
         <FormControl>
           <FormLabel>Role</FormLabel>
-          <Select name="role" defaultValue={user.role} onChange={handleSelectChange}>
+          <Select
+            name="role"
+            defaultValue={user.role}
+            onChange={handleSelectChange}
+          >
             {role.map((roleName) => (
               <Option key={roleName} value={roleName}>
                 {roleName}

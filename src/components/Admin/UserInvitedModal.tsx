@@ -7,8 +7,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  List,
-  ListItem,
   Modal,
   ModalDialog,
   Typography,
@@ -51,13 +49,22 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
     setError("");
   };
 
-  const handleDeleteEmail = () => {
-    console.log("delete email");
+  const handleDeleteEmail = (email_id: number) => {
+    return () => {
+      setEmailsList((prevEmails) =>
+        prevEmails.filter((email) => email.id !== email_id),
+      );
+    };
   };
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 500 }}>
+      <ModalDialog
+        variant="outlined"
+        role="alertdialog"
+        size={"lg"}
+        sx={{ p: 3, minWidth: 500 }}
+      >
         <DialogTitle
           sx={{
             display: "flex",
@@ -76,6 +83,32 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
 
         <FormControl>
           <FormLabel>Email *</FormLabel>
+
+          {/* Added email's list */}
+          {emailsList.length !== 0 &&
+            emailsList.map((email) => (
+              <Box display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
+                <Input
+                  name="email"
+                  type="email"
+                  value={email.email}
+                  required
+                  placeholder="example@email.com"
+                  style={{ width: "100%" }}
+                  onChange={handleInputEmails}
+                />
+                <Button
+                  variant="outlined"
+                  color="danger"
+                  sx={{ p: 1, ml: 2 }}
+                  onClick={handleDeleteEmail(email.id)}
+                >
+                  <DeleteOutlineOutlinedIcon />
+                </Button>
+              </Box>
+            ))}
+
+          {/* Add email form */}
           <Box display="flex" justifyContent="space-between">
             <Input
               name="email"
@@ -94,9 +127,6 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
             >
               <Add />
             </Button>
-            {/* <Button variant="outlined" color="neutral" sx={{ p: 1, ml: 1 }}>
-              <DeleteOutlineOutlinedIcon />
-            </Button> */}
           </Box>
           <Typography color="danger">{error}</Typography>
         </FormControl>
@@ -107,23 +137,16 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
           </Button>
         </Box> */}
 
-        <Box>
-          {emailsList.length !== 0 && <Typography>Invitation List</Typography>}
-
-          <List marker="circle">
-            {emailsList.map((email) => (
-              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                <ListItem key={email.id}>{email.email}</ListItem>
-                <Button variant="outlined" color="neutral" sx={{ p: 1, ml: 1 }}>
-                  <DeleteOutlineOutlinedIcon onClick={handleDeleteEmail} />
-                </Button>
-              </Box>
-            ))}
-          </List>
-        </Box>
-
         <DialogActions>
-          <Button disabled={emailsList.length === 0} variant="solid" color="neutral">
+          <Button
+            disabled={emailsList.length === 0}
+            variant="solid"
+            style={{
+              backgroundColor:
+                emailsList.length === 0 ? "defaultColor" : "#3E8A8B",
+              color: emailsList.length === 0 ? "defaultColor" : "white",
+            }}
+          >
             Send invite
           </Button>
           <Button variant="outlined" color="neutral" onClick={onClose}>

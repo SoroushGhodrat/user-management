@@ -40,7 +40,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
   const handleCollectEmail = () => {
     // it just a simple email validation. we need to check the email is already exist or not, duplicate email, etc.
     if (!emailValidator(email)) {
-      return setError("Invalid email");
+      return setError("Invalid email format!");
     }
 
     setEmailsList((prevEmails) => [...prevEmails, { id: Date.now(), email }]);
@@ -56,6 +56,12 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
       );
     };
   };
+
+  const handleSentInvitation = () => {
+    console.log("invitation sent!", emailsList);
+  };
+
+  console.log("ssss", emailsList);
 
   return (
     <Modal open={isOpen} onClose={onClose}>
@@ -81,13 +87,18 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
 
         <Divider inset="none" />
 
-        <FormControl>
+        <Box>
           <FormLabel>Email *</FormLabel>
 
           {/* Added email's list */}
           {emailsList.length !== 0 &&
             emailsList.map((email) => (
-              <Box display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
+              <Box
+                key={email.id}
+                display="flex"
+                justifyContent="space-between"
+                sx={{ mb: 2 }}
+              >
                 <Input
                   name="email"
                   type="email"
@@ -128,8 +139,10 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
               <Add />
             </Button>
           </Box>
-          <Typography color="danger">{error}</Typography>
-        </FormControl>
+          <Typography color="danger" level="body-md">
+            {error}
+          </Typography>
+        </Box>
 
         {/* <Box>
           <Button variant="outlined" color="neutral" startDecorator={<Add />}>
@@ -142,12 +155,12 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
             disabled={emailsList.length === 0}
             variant="solid"
             style={{
-              backgroundColor:
-                emailsList.length === 0 ? "defaultColor" : "#3E8A8B",
-              color: emailsList.length === 0 ? "defaultColor" : "white",
+              backgroundColor: emailsList.length === 0 ? "neutral" : "#3E8A8B",
+              color: emailsList.length === 0 ? "neutral" : "white",
             }}
+            onClick={handleSentInvitation}
           >
-            Send invite
+            Send invite {emailsList.length > 0 && `(${emailsList.length})`}
           </Button>
           <Button variant="outlined" color="neutral" onClick={onClose}>
             Cancle

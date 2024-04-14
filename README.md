@@ -25,7 +25,7 @@ To clone this project, follow these steps:
 2. Run the following command:
 
 ```bash
-https://github.com/SoroushGhodrat/user-management.git
+git clone https://github.com/SoroushGhodrat/user-management.git
 ```
 
 ## Installation

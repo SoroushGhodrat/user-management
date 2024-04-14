@@ -47,6 +47,9 @@ const usersSlice = createSlice({
     setSuccess: (state, action: PayloadAction<boolean>) => {
       state.isSuccess = action.payload;
     },
+    deleteUser: (state, action: PayloadAction<string>) => {
+      state.users = state.users.filter((user) => user.id !== action.payload);
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -66,6 +69,6 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, setError, setErrorMsg, setSuccess } = usersSlice.actions;
+export const { setLoading, setError, setErrorMsg, setSuccess, deleteUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

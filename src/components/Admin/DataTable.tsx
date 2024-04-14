@@ -1,6 +1,6 @@
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -39,6 +39,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchUsers } from "../../store/features/users/usersSlice";
 import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
+import StatusChip from "../UI/StatusChip";
+import DeleteModal from "../UI/DeleteModal";
 
 type TabName = "users" | "userRoles";
 interface DataTableProps {
@@ -65,93 +67,102 @@ const TableRow: React.FC<{
 }> = ({ user, tabName, handleEditUser, handleDeleteUser }) => {
   const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
     user;
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
 
   return (
-    <tr key={id}>
-      {tabName === "users" && (
-        <>
-          <td>
-            <Checkbox label="" variant="outlined" size="sm" />
-          </td>
-          <td>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              {image ? (
-                <Avatar size="md" src={image} alt={name} />
-              ) : (
-                <Avatar>
-                  <Person fontSize="large" />
-                </Avatar>
-              )}
-              <Typography>
-                {name} {family}
-                {isOwner && (
-                  <Chip sx={{ "--Chip-radius": "6px", background: "#D6EDED", ml: 2 }}>Owner</Chip>
+    <>
+      <DeleteModal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} user={user} />
+      <tr key={id}>
+        {tabName === "users" && (
+          <>
+            <td>
+              <Checkbox label="" variant="outlined" size="sm" />
+            </td>
+            <td>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                {image ? (
+                  <Avatar size="md" src={image} alt={name} />
+                ) : (
+                  <Avatar>
+                    <Person fontSize="large" />
+                  </Avatar>
                 )}
-              </Typography>
-            </Box>
-          </td>
-          <td>{role}</td>
-          <td>{email}</td>
-          <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
-          <td>{`${countryCode} ${phoneFormater(phone)}`}</td>
-          <td>{status}</td>
-          <td>
-            <Dropdown>
-              <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
-                <MoreVert />
-              </MenuButton>
-              <Menu placement="bottom-end">
-                <MenuItem onClick={handleEditUser}>
-                  <ListItemDecorator>
-                    <Edit />
-                  </ListItemDecorator>
-                  Edit post
-                </MenuItem>
-                <ListDivider />
-                <MenuItem variant="soft" color="danger" onClick={handleDeleteUser}>
-                  <ListItemDecorator sx={{ color: "inherit" }}>
-                    <DeleteForever />
-                  </ListItemDecorator>
-                  Delete
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-          </td>
-        </>
-      )}
-      {tabName === "userRoles" && (
-        <>
-          <td>
-            <Checkbox label="" variant="outlined" size="sm" />
-          </td>
-          <td>{role}</td>
-          <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
-          <td>{status}</td>
-          <td>
-            <Dropdown>
-              <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
-                <MoreVert />
-              </MenuButton>
-              <Menu placement="bottom-end">
-                <MenuItem onClick={handleEditUser}>
-                  <ListItemDecorator>
-                    <Edit />
-                  </ListItemDecorator>
-                  Edit post
-                </MenuItem>
-                <ListDivider />
-                <MenuItem variant="soft" color="danger" onClick={handleDeleteUser}>
-                  <ListItemDecorator sx={{ color: "inherit" }}>
-                    <DeleteForever />
-                  </ListItemDecorator>
-                  Delete
-                </MenuItem>
-              </Menu>
-            </Dropdown>
-          </td>
-        </>
-      )}
-    </tr>
+                <Typography>
+                  {name} {family}
+                  {isOwner && (
+                    <Chip sx={{ "--Chip-radius": "6px", background: "#D6EDED", ml: 2 }}>Owner</Chip>
+                  )}
+                </Typography>
+              </Box>
+            </td>
+            <td>{role}</td>
+            <td>{email}</td>
+            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td>{`${countryCode} ${phoneFormater(phone)}`}</td>
+            <td>
+              <StatusChip status={status}>{status}</StatusChip>
+            </td>
+            <td>
+              <Dropdown>
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
+                  <MoreVert />
+                </MenuButton>
+                <Menu placement="bottom-end">
+                  <MenuItem onClick={handleEditUser}>
+                    <ListItemDecorator>
+                      <Edit />
+                    </ListItemDecorator>
+                    Edit
+                  </MenuItem>
+                  <ListDivider />
+                  <MenuItem variant="soft" color="danger" onClick={openDeleteModal}>
+                    <ListItemDecorator sx={{ color: "inherit" }}>
+                      <DeleteForever />
+                    </ListItemDecorator>
+                    Delete
+                  </MenuItem>
+                </Menu>
+              </Dropdown>
+            </td>
+          </>
+        )}
+        {tabName === "userRoles" && (
+          <>
+            <td>
+              <Checkbox label="" variant="outlined" size="sm" />
+            </td>
+            <td>{role}</td>
+            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td>{status}</td>
+            <td>
+              <Dropdown>
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
+                  <MoreVert />
+                </MenuButton>
+                <Menu placement="bottom-end">
+                  <MenuItem onClick={handleEditUser}>
+                    <ListItemDecorator>
+                      <Edit />
+                    </ListItemDecorator>
+                    Edit post
+                  </MenuItem>
+                  <ListDivider />
+                  <MenuItem variant="soft" color="danger" onClick={handleDeleteUser}>
+                    <ListItemDecorator sx={{ color: "inherit" }}>
+                      <DeleteForever />
+                    </ListItemDecorator>
+                    Delete
+                  </MenuItem>
+                </Menu>
+              </Dropdown>
+            </td>
+          </>
+        )}
+      </tr>
+    </>
   );
 };
 

@@ -4,7 +4,6 @@ import {
   DialogActions,
   DialogTitle,
   Divider,
-  FormControl,
   FormLabel,
   Input,
   Modal,
@@ -38,7 +37,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
   };
 
   const handleCollectEmail = () => {
-    // it just a simple email validation. we need to check the email is already exist or not, duplicate email, etc.
+    // This is just a simple email validation. We need to check if the email already exists, if it's a duplicate, etc.
     if (!emailValidator(email)) {
       return setError("Invalid email format!");
     }

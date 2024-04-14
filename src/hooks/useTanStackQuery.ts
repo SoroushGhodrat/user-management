@@ -9,7 +9,12 @@ interface UseTanStackQueryProps {
 }
 
 //  in case if we want to use React Query instead of Redux
-const useTanStackQuery = ({ queryKey, API, retry, gcTime }: UseTanStackQueryProps) => {
+const useTanStackQuery = ({
+  queryKey,
+  API,
+  retry,
+  gcTime,
+}: UseTanStackQueryProps) => {
   return useQuery({
     queryKey: [queryKey, API],
     queryFn: async () => {

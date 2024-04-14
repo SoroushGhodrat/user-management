@@ -23,6 +23,7 @@ import {
   Stack,
   Table,
   Typography,
+  Snackbar,
 } from "@mui/joy";
 import {
   DeleteForever,
@@ -41,6 +42,7 @@ import { fetchUsers } from "../../store/features/users/usersSlice";
 import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
 import StatusChip from "../UI/StatusChip";
 import DeleteModal from "../UI/DeleteModal";
+import zIndex from "@mui/material/styles/zIndex";
 
 type TabName = "users" | "userRoles";
 interface DataTableProps {
@@ -74,7 +76,11 @@ const TableRow: React.FC<{
 
   return (
     <>
-      <DeleteModal isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} user={user} />
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        user={user}
+      />
       <tr key={id}>
         {tabName === "users" && (
           <>
@@ -93,7 +99,15 @@ const TableRow: React.FC<{
                 <Typography>
                   {name} {family}
                   {isOwner && (
-                    <Chip sx={{ "--Chip-radius": "6px", background: "#D6EDED", ml: 2 }}>Owner</Chip>
+                    <Chip
+                      sx={{
+                        "--Chip-radius": "6px",
+                        background: "#D6EDED",
+                        ml: 2,
+                      }}
+                    >
+                      Owner
+                    </Chip>
                   )}
                 </Typography>
               </Box>
@@ -192,6 +206,7 @@ const DataTable: React.FC<DataTableProps> = ({
       {isLoading && <CustomSkeleton />}
 
       {isError && <Typography color="danger">Error: {errorMessage}</Typography>}
+
       {!isLoading && isSuccess && (
         <Sheet variant="outlined" sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}>
           <Box

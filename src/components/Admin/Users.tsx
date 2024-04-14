@@ -25,7 +25,7 @@ const Users: React.FC = () => {
 
   const handleChangeRowsPerPage = (
     _event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-    value: number | null
+    value: number | null,
   ) => {
     setRowsPerPage(value as number);
   };
@@ -41,8 +41,11 @@ const Users: React.FC = () => {
   const handleDeleteUser = (userId: string) => {
     console.log(`user id: ${userId} to delete action`);
   };
-  
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage);
+
+  const usersOnCurrentPage = users.slice(
+    (pageNumber - 1) * rowsPerPage,
+    pageNumber * rowsPerPage,
+  );
 
   useEffect(() => {
     dispatch(fetchUsers());

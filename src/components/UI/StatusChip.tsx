@@ -14,7 +14,10 @@ const statusColors = {
 };
 
 const StatusChip: React.FC<StatusChipProps> = ({ status, children }) => {
-  const colors = statusColors[status] || { backgroundColor: "", color: "#24292e" };
+  const colors = statusColors[status] || {
+    backgroundColor: "",
+    color: "#24292e",
+  };
 
   return (
     <Chip

@@ -2,7 +2,6 @@ import UserManagement from "./UserManagement";
 
 const Admin: React.FC = () => {
   return (
-   
     <div>
       <header>
         <h4>User management</h4>

@@ -3,12 +3,37 @@ import Tab, { tabClasses } from "@mui/joy/Tab";
 import { useState } from "react";
 import Users from "../components/Admin/Users";
 import UserRoles from "../components/Admin/UserRoles";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import SnackBar from "../components/UI/SnackBar";
+import { setDeleteUserStatus } from "../store/features/users/usersSlice";
 
 const UserManagement: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
 
+  const dispatch = useDispatch();
+  const { isDeleteUserSuccess } = useSelector(
+    (state: RootState) => state.users,
+  );
+
+  const onClose = () => {
+    dispatch(setDeleteUserStatus(false));
+  };
+
   return (
     <Box>
+      {isDeleteUserSuccess && (
+        <SnackBar
+          message="User deleted"
+          vertical="top"
+          horizontal="center"
+          variant="soft"
+          color="danger"
+          autoHideDuration={3000}
+          open={isDeleteUserSuccess}
+          onClose={onClose}
+        />
+      )}
       <Tabs
         aria-label="Pipeline"
         value={index}

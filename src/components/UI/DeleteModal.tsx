@@ -14,8 +14,11 @@ import {
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ClearIcon from "@mui/icons-material/Clear";
 import { User } from "../../models/user";
-import { useDispatch } from 'react-redux';
-import { deleteUser } from '../../store/features/users/usersSlice'; 
+import { useDispatch } from "react-redux";
+import {
+  deleteUser,
+  setDeleteUserStatus,
+} from "../../store/features/users/usersSlice";
 
 type DeleteModalProps = {
   isOpen: boolean;
@@ -26,11 +29,25 @@ type DeleteModalProps = {
 const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch = useDispatch();
 
+  const handleDeleteUser = (userId: string) => {
+    dispatch(deleteUser(userId));
+    dispatch(setDeleteUserStatus(true));
+  };
+
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 500 }}>
+      <ModalDialog
+        variant="outlined"
+        role="alertdialog"
+        size={"lg"}
+        sx={{ p: 3, minWidth: 500 }}
+      >
         <DialogTitle
-          sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <DeleteOutlineIcon sx={{ pr: 1 }} />
@@ -50,11 +67,17 @@ const DeleteModal: React.FC<DeleteModalProps> = ({ isOpen, onClose, user }) => {
         </List>
 
         <DialogContent>
-          <Typography color="danger">NOTE: This action is permanent.</Typography>
+          <Typography color="danger">
+            NOTE: This action is permanent.
+          </Typography>
         </DialogContent>
 
         <DialogActions>
-          <Button variant="solid" color="danger" onClick={() => dispatch(deleteUser(user.id))}>
+          <Button
+            variant="solid"
+            color="danger"
+            onClick={() => handleDeleteUser(user.id)}
+          >
             Yes, delete
           </Button>
           <Button variant="outlined" color="neutral" onClick={onClose}>

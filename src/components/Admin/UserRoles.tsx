@@ -9,14 +9,20 @@ const UserRoles: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
-  const headers = [<Checkbox variant="outlined" size="sm" />, "Role", "Created on", "Status", ""];
+  const headers = [
+    <Checkbox variant="outlined" size="sm" />,
+    "Role",
+    "Created on",
+    "Status",
+    "",
+  ];
 
   const dispatch = useDispatch<AppDispatch>();
   const { users } = useSelector((state: RootState) => state.users);
 
   const handleChangeRowsPerPage = (
     _event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-    value: number | null
+    value: number | null,
   ) => {
     setRowsPerPage(value as number);
   };
@@ -33,7 +39,10 @@ const UserRoles: React.FC = () => {
     console.log(`user id: ${userId} to delete action`);
   };
 
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage);
+  const usersOnCurrentPage = users.slice(
+    (pageNumber - 1) * rowsPerPage,
+    pageNumber * rowsPerPage,
+  );
 
   useEffect(() => {
     dispatch(fetchUsers());

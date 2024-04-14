@@ -8,6 +8,7 @@ interface UsersState {
   isError: boolean;
   errorMessage: string | null | undefined;
   isSuccess: boolean;
+  isDeleteUserSuccess: boolean;
 }
 
 const initialState: UsersState = {
@@ -16,6 +17,7 @@ const initialState: UsersState = {
   isError: false,
   errorMessage: null,
   isSuccess: false,
+  isDeleteUserSuccess: false,
 };
 
 // Async thunk for fetching users
@@ -23,9 +25,11 @@ const initialState: UsersState = {
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await new Promise<AxiosResponse<User[]>>((resolve) =>
     setTimeout(async () => {
-      const result = await axios.get<User[]>("http://localhost:8000/DUMMY_USERS");
+      const result = await axios.get<User[]>(
+        "http://localhost:8000/DUMMY_USERS",
+      );
       resolve(result);
-    }, 2000)
+    }, 2000),
   );
 
   return response.data;
@@ -49,7 +53,10 @@ const usersSlice = createSlice({
     },
     deleteUser: (state, action: PayloadAction<string>) => {
       state.users = state.users.filter((user) => user.id !== action.payload);
-    }
+    },
+    setDeleteUserStatus: (state, action: PayloadAction<boolean>) => {
+      state.isDeleteUserSuccess = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,6 +76,13 @@ const usersSlice = createSlice({
   },
 });
 
-export const { setLoading, setError, setErrorMsg, setSuccess, deleteUser } = usersSlice.actions;
+export const {
+  setLoading,
+  setError,
+  setErrorMsg,
+  setSuccess,
+  deleteUser,
+  setDeleteUserStatus,
+} = usersSlice.actions;
 
 export default usersSlice.reducer;

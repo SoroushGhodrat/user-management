@@ -17,73 +17,133 @@ const AnimationSkeleton = () => {
           <Skeleton animation="wave" />
         </Button>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>
         </CardContent>
         <CardContent orientation="horizontal">
-          <Skeleton animation="wave" variant="circular" width={28} height={28} />
+          <Skeleton
+            animation="wave"
+            variant="circular"
+            width={28}
+            height={28}
+          />
           <div>
             <Skeleton animation="wave" variant="text" sx={{ width: 950 }} />
           </div>

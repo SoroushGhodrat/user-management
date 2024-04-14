@@ -1,12 +1,12 @@
 import { Tabs, TabList, TabPanel, Box } from "@mui/joy";
 import Tab, { tabClasses } from "@mui/joy/Tab";
 import { useState } from "react";
-import Users from "../components/Admin/Users";
-import UserRoles from "../components/Admin/UserRoles";
+import Users from "@/components/Admin/Users";
+import UserRoles from "@/components/Admin/UserRoles";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
-import SnackBar from "../components/UI/SnackBar";
-import { setDeleteUserStatus } from "../store/features/users/usersSlice";
+import { RootState } from "@/store";
+import SnackBar from "@/components/UI/SnackBar";
+import { setDeleteUserStatus } from "@/store/features/users/usersSlice";
 
 const UserManagement: React.FC = () => {
   const [index, setIndex] = useState<number>(0);

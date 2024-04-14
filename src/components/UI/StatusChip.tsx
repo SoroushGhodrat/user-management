@@ -1,5 +1,5 @@
 import { Chip } from "@mui/joy";
-import { Status } from "../../models/user";
+import { Status } from "@/models/user";
 
 type StatusChipProps = {
   status: Status;

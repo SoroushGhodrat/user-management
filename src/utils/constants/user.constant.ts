@@ -1,4 +1,4 @@
-import { User } from "../../models/user";
+import { User } from "@/models/user";
 
 const DUMMY_USERS: User[] = [
   {

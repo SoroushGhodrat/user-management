@@ -34,17 +34,17 @@ import {
   ViewWeekOutlined,
   ForwardToInboxOutlined,
 } from "@mui/icons-material";
-import { User } from "../../models/user";
+import { User } from "@/models/user";
 import {
   phoneFormater,
   dateFormater,
   firstLetterUppercase,
-} from "../../utils/helpers/index";
+} from "@/utils/helpers/index";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { fetchUsers } from "../../store/features/users/usersSlice";
-import CustomSkeleton from "../UI/CustomSkeleton";
-import StatusChip from "../UI/StatusChip";
+import { AppDispatch, RootState } from "@/store";
+import { fetchUsers } from "@/store/features/users/usersSlice";
+import CustomSkeleton from "@/components/UI/CustomSkeleton";
+import StatusChip from "@/components/UI/StatusChip";
 import UserDeleteModal from "./UserDeleteModal";
 import EditUserModal from "./EditUserModal";
 import UserInvitedModal from "./UserInvitedModal";

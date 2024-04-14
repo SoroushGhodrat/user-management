@@ -14,12 +14,12 @@ import {
 } from "@mui/joy";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import ClearIcon from "@mui/icons-material/Clear";
-import { User } from "../../models/user";
+import { User } from "@/models/user";
 import { useDispatch } from "react-redux";
-import { updateUser } from "../../store/features/users/usersSlice";
-import { Role } from "../../models/user";
+import { updateUser } from "@/store/features/users/usersSlice";
+import { Role } from "@/models/user";
 import { useState } from "react";
-import { AppDispatch } from "../../store";
+import { AppDispatch } from "@/store";
 
 type EditUserModalProps = {
   isOpen: boolean;

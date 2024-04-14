@@ -13,13 +13,13 @@ import {
 } from "@mui/joy";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ClearIcon from "@mui/icons-material/Clear";
-import { User } from "../../models/user";
+import { User } from "@/models/user";
 import { useDispatch } from "react-redux";
 import {
   deleteUser,
   setDeleteUserStatus,
-} from "../../store/features/users/usersSlice";
-import { AppDispatch } from "../../store";
+} from "@/store/features/users/usersSlice";
+import { AppDispatch } from "@/store";
 
 type UserDeleteModalProps = {
   isOpen: boolean;

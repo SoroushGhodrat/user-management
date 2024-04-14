@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/joy";
-import UserManagement from "./UserManagement";
+import UserManagement from "./UserManagement.page";
 
 const Admin: React.FC = () => {
   return (

@@ -1,5 +1,5 @@
 import "./App.css";
-import Admin from "./pages/Admin";
+import Admin from "./pages/Admin.page";
 import { store } from "./store";
 import { Provider } from "react-redux";
 

@@ -10,3 +10,7 @@ export const dateFormater = (date: string): string => {
 export const firstLetterUppercase = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const emailNormalizer = (email: string): string => {
+  return email.trim().toLowerCase().replace(/\s/g, '');
+};

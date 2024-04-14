@@ -15,7 +15,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import Add from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
-import { emailValidator } from "@/utils/helpers/index";
+import { emailValidator, emailNormalizer } from "@/utils/helpers/index";
 
 type DeleteModalProps = {
   isOpen: boolean;
@@ -43,7 +43,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
     }
 
     setEmailsList((prevEmails) => {
-      const sanitizedEmail = email.trim().toLowerCase();
+      const sanitizedEmail = emailNormalizer(email);
 
       return [...prevEmails, { id: Date.now(), email: sanitizedEmail }];
     });
@@ -54,9 +54,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
 
   const handleDeleteEmail = (email_id: number) => {
     return () => {
-      setEmailsList((prevEmails) =>
-        prevEmails.filter((email) => email.id !== email_id),
-      );
+      setEmailsList((prevEmails) => prevEmails.filter((email) => email.id !== email_id));
     };
   };
 
@@ -66,12 +64,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog
-        variant="outlined"
-        role="alertdialog"
-        size={"lg"}
-        sx={{ p: 3, minWidth: 500 }}
-      >
+      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 500 }}>
         <DialogTitle
           sx={{
             display: "flex",
@@ -94,12 +87,7 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
           {/* Added email's list */}
           {emailsList.length !== 0 &&
             emailsList.map((email) => (
-              <Box
-                key={email.id}
-                display="flex"
-                justifyContent="space-between"
-                sx={{ mb: 2 }}
-              >
+              <Box key={email.id} display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
                 <Input
                   name="email"
                   type="email"

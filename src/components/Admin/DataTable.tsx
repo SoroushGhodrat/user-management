@@ -39,9 +39,9 @@ import { phoneFormater, dateFormater } from "../../helper/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
 import { fetchUsers } from "../../store/features/users/usersSlice";
-import CustomSkeleton from "../CustomSkeleton/CustomSkeleton";
+import CustomSkeleton from "../UI/CustomSkeleton";
 import StatusChip from "../UI/StatusChip";
-import DeleteModal from "../UI/DeleteModal";
+import DeleteModal from "./DeleteModal";
 import EditUserModal from "./EditUserModal";
 import UserInvitedModal from "./UserInvitedModal";
 
@@ -226,12 +226,19 @@ const DataTable: React.FC<DataTableProps> = ({
     (state: RootState) => state.users
   );
 
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  const openInviteModal = () => {
+    setIsInviteModalOpen(true);
+  };
+
   useEffect(() => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
   return (
     <>
+      <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
+
       {isLoading && <CustomSkeleton />}
 
       {isError && <Typography color="danger">Error: {errorMessage}</Typography>}
@@ -255,7 +262,11 @@ const DataTable: React.FC<DataTableProps> = ({
                 {tabName === "users" ? "Users" : "User roles"}
               </Typography>
             </Stack>
-            {tabName === "users" && <Button sx={{ backgroundColor: "#3E8A8B" }}>New user</Button>}
+            {tabName === "users" && (
+              <Button sx={{ backgroundColor: "#3E8A8B" }} onClick={openInviteModal}>
+                Invite users
+              </Button>
+            )}
             {tabName === "userRoles" && (
               <Button sx={{ backgroundColor: "#3E8A8B" }}>New user role</Button>
             )}

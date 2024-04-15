@@ -69,3 +69,4 @@ This project uses the following dependencies:
 - `Material Icons`: Version 5.15.15
 - `Typescript`: Version 5.2.2
 - `Vite`: Version 5.2.0
+- `React query`: Version 5.29.0

@@ -9,12 +9,7 @@ interface UseTanStackQueryProps {
 }
 
 //  in case if we want to use React Query instead of Redux
-const useTanStackQuery = ({
-  queryKey,
-  API,
-  retry,
-  gcTime,
-}: UseTanStackQueryProps) => {
+const useTanStackQuery = ({ queryKey, API, retry, gcTime }: UseTanStackQueryProps) => {
   return useQuery({
     queryKey: [queryKey, API],
     queryFn: async () => {
@@ -36,6 +31,20 @@ const useTanStackQuery = ({
 export default useTanStackQuery;
 
 // Documentation
+/**
+ * How to use this hook:
+ *  import useTanStackQuery from '@/hooks/useTanStackQuery
+ * 
+ *  const { data } = useTanStackQuery({
+ *   queryKey: 'myData',
+ *   API: 'http://localhost:8000/DUMMY_USERS',
+ *   retry: 3,
+ *   gcTime: 60000,
+ *  });
+ *
+ *  console.log('React query data:', data);
+ */
+
 /**
  * queryKey:
  * A unique identifier for the data this query will fetch. This is used by react-query to manage caching,

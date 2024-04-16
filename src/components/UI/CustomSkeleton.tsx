@@ -3,6 +3,7 @@ import Button from "@mui/joy/Button";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Skeleton from "@mui/joy/Skeleton";
+import { Box } from "@mui/joy";
 
 const AnimationSkeleton = () => {
   const width = 950;
@@ -25,13 +26,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -40,13 +41,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -55,13 +56,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -70,13 +71,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -85,13 +86,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -100,13 +101,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -115,13 +116,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -130,13 +131,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -145,13 +146,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -160,13 +161,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -175,13 +176,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <CardContent orientation="horizontal">
           <Skeleton
@@ -190,13 +191,13 @@ const AnimationSkeleton = () => {
             width={28}
             height={28}
           />
-          <div>
+          <Box>
             <Skeleton
               animation="wave"
               variant="text"
               sx={{ width: { width } }}
             />
-          </div>
+          </Box>
         </CardContent>
         <Button>
           Read more

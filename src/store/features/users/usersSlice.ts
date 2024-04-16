@@ -9,6 +9,8 @@ interface UsersState {
   errorMessage: string | null | undefined;
   isSuccess: boolean;
   isDeleteUserSuccess: boolean;
+  isDeleteMultipleUsersSuccess: boolean;
+  isUpdateUserSuccess: boolean;
 }
 
 const initialState: UsersState = {
@@ -18,6 +20,8 @@ const initialState: UsersState = {
   errorMessage: null,
   isSuccess: false,
   isDeleteUserSuccess: false,
+  isDeleteMultipleUsersSuccess: false,
+  isUpdateUserSuccess: false,
 };
 
 // Async thunk for fetching users
@@ -161,6 +165,7 @@ const usersSlice = createSlice({
         );
         state.isLoading = false;
         state.isSuccess = true;
+        state.isUpdateUserSuccess = true;
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
@@ -191,7 +196,7 @@ const usersSlice = createSlice({
           (user) => !action.payload.includes(user.id),
         );
         state.isLoading = false;
-        state.isDeleteUserSuccess = true;
+        state.isDeleteMultipleUsersSuccess = true;
       })
       .addCase(deleteMultipleUsers.rejected, (state) => {
         state.isLoading = false;

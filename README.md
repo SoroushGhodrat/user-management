@@ -8,8 +8,8 @@
 
 Before you begin, ensure you have met the following requirements:
 
-- You have installed the latest version of [Node.js](https://nodejs.org/en/download/).
-- You have installed the latest version of [npm](https://www.npmjs.com/get-npm).
+- Installed the latest version of [Node.js](https://nodejs.org/en/download/).
+- Installed the latest version of [npm](https://www.npmjs.com/get-npm).
 
 ## Cloning the Project
 

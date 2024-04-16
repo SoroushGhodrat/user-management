@@ -286,9 +286,9 @@ const DataTable: React.FC<DataTableProps> = ({
     setIsInviteModalOpen(true);
   };
 
-  const toggleRowSelected = (id: string) => {
-    setSelectedRows((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+  // const toggleRowSelected = (id: string) => {
+  //   setSelectedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+  // };
 
   const handleMultipleDelete = (id: string) => {
     setSelectedIds((prevIds) => {

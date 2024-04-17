@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import usersReducer from "./store/features/users/usersSlice";
+import tableReducer from "./store/features/table/selectedRowsSlice";
 
 export const store = configureStore({
   reducer: {
     users: usersReducer,
+    table: tableReducer,
   },
 });
 

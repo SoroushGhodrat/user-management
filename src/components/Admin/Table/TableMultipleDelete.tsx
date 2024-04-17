@@ -1,49 +1,60 @@
 import { Box, Button, Typography } from "@mui/joy";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/store";
-import { deleteMultipleUsers } from "@/store/features/users/usersSlice";
+import { useState } from "react";
+import UserDeleteModal from "../UserDeleteModal";
+import { User } from "@/models/user";
 
 interface SelectedRows {
   selectedRows: Record<string, boolean>;
-  setSelectedRows: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setSelectedRows?: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  users: User[];
 }
 
-const TableMultipleDelete: React.FC<SelectedRows> = ({ selectedRows, setSelectedRows }) => {
-  const dispatch = useDispatch<AppDispatch>();
+const TableMultipleDelete: React.FC<SelectedRows> = ({ users, selectedRows }) => {
   const userIds = Object.keys(selectedRows);
 
-  const handleDeleteMultipleUsers = () => {
-    dispatch(deleteMultipleUsers(userIds));
-    setSelectedRows({});
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
   };
 
+  const filterSelectedUsers = users.filter((user) => selectedRows[user.id]);
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: 1,
+    <>
+      <UserDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setIsDeleteModalOpen(false)}
+        user={filterSelectedUsers}
+      />
 
-        backgroundColor: "#e1eded",
-      }}
-    >
-      <Typography sx={{ color: "#3E8A8B", m: 2 }}>
-        {`${userIds.length} ${userIds.length !== 1 ? "rows" : "row"} selected`}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 1,
 
-      <Button
-        sx={{ m: 2 }}
-        color="danger"
-        variant="soft"
-        onClick={handleDeleteMultipleUsers}
-        startDecorator={<DeleteOutlineOutlinedIcon />}
+          backgroundColor: "#e1eded",
+        }}
       >
-        Delete
-      </Button>
-    </Box>
+        <Typography sx={{ color: "#3E8A8B", m: 2 }}>
+          {`${userIds.length} ${userIds.length !== 1 ? "rows" : "row"} selected`}
+        </Typography>
+
+        <Button
+          sx={{ m: 2 }}
+          color="danger"
+          variant="soft"
+          onClick={openDeleteModal}
+          startDecorator={<DeleteOutlineOutlinedIcon />}
+        >
+          Delete
+        </Button>
+      </Box>
+    </>
   );
 };
 

@@ -3,41 +3,24 @@ import Tab, { tabClasses } from "@mui/joy/Tab";
 import { useState } from "react";
 import Users from "@/components/Admin/Users";
 import UserRoles from "@/components/Admin/UserRoles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import SnackBar from "@/components/UI/SnackBar";
-import { setDeleteUserStatus } from "@/store/features/users/usersSlice";
 
 const UserManagement: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
 
-  const dispatch = useDispatch();
-  const { isDeleteUserSuccess } = useSelector(
-    (state: RootState) => state.users,
-  );
-
-  const onClose = () => {
-    dispatch(setDeleteUserStatus(false));
+  const handleTabNameChange = (value: number) => {
+    value === 0
+      ? localStorage.setItem("tab name", "users")
+      : localStorage.setItem("tab name", "userRoles");
   };
 
   return (
     <Box>
-      {isDeleteUserSuccess && (
-        <SnackBar
-          message="User deleted"
-          vertical="top"
-          horizontal="center"
-          variant="soft"
-          color="danger"
-          autoHideDuration={3000}
-          open={isDeleteUserSuccess}
-          onClose={onClose}
-        />
-      )}
       <Tabs
         aria-label="Pipeline"
         value={index}
-        onChange={(_event, value) => setIndex(value as number)}
+        onChange={(_event, value) => {
+          setIndex(value as number), handleTabNameChange(value as number);
+        }}
       >
         <TabList
           sx={{
@@ -70,13 +53,13 @@ const UserManagement: React.FC = () => {
           sx={(theme) => ({
             "--bg": theme.vars.palette.background.surface,
             background: "var(--bg)",
-            // boxShadow: "0 0 0 100vmax var(--bg)",
             clipPath: "inset(0 -100vmax)",
           })}
         >
           <TabPanel value={0}>
             <Users />
           </TabPanel>
+
           <TabPanel value={1}>
             <UserRoles />
           </TabPanel>

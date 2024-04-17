@@ -35,17 +35,10 @@ import {
   ForwardToInboxOutlined,
 } from "@mui/icons-material";
 import { User } from "@/models/user";
-import {
-  phoneFormater,
-  dateFormater,
-  firstLetterUppercase,
-} from "@/utils/helpers/index";
+import { phoneFormater, dateFormater, firstLetterUppercase } from "@/utils/helpers/index";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
-import {
-  deleteMultipleUsers,
-  fetchUsers,
-} from "@/store/features/users/usersSlice";
+import { deleteMultipleUsers, fetchUsers } from "@/store/features/users/usersSlice";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import CustomSkeleton from "@/components/UI/CustomSkeleton";
 import StatusChip from "@/components/UI/StatusChip";
@@ -64,7 +57,7 @@ interface DataTableProps {
   handleChangePage: (newPage: number) => void;
   handleChangeRowsPerPage: (
     event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-    value: number | null,
+    value: number | null
   ) => void;
 }
 
@@ -74,26 +67,9 @@ const TableRow: React.FC<{
   handleMultipleDelete: (id: string) => void;
   isRowSelected: boolean;
   toggleRowSelected: () => void;
-}> = ({
-  user,
-  tabName,
-  handleMultipleDelete,
-  isRowSelected,
-  toggleRowSelected,
-}) => {
-  const {
-    id,
-    image,
-    name,
-    family,
-    isOwner,
-    role,
-    email,
-    createdOn,
-    countryCode,
-    phone,
-    status,
-  } = user;
+}> = ({ user, tabName, handleMultipleDelete, isRowSelected, toggleRowSelected }) => {
+  const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
+    user;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -129,15 +105,9 @@ const TableRow: React.FC<{
         user={user}
       />
 
-      <UserInvitedModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-      />
+      {/* <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} /> */}
 
-      <tr
-        key={id}
-        style={{ backgroundColor: isRowSelected ? "#e1eded" : "default" }}
-      >
+      <tr key={id} style={{ backgroundColor: isRowSelected ? "#e1eded" : "default" }}>
         {tabName === "users" && (
           <>
             <td>
@@ -184,10 +154,7 @@ const TableRow: React.FC<{
             <td>
               {/* Actions */}
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
@@ -208,11 +175,7 @@ const TableRow: React.FC<{
                   </MenuItem>
 
                   <ListDivider />
-                  <MenuItem
-                    variant="soft"
-                    color="danger"
-                    onClick={openDeleteModal}
-                  >
+                  <MenuItem variant="soft" color="danger" onClick={openDeleteModal}>
                     <ListItemDecorator sx={{ color: "inherit" }}>
                       <DeleteForever />
                     </ListItemDecorator>
@@ -233,10 +196,7 @@ const TableRow: React.FC<{
             <td>{status}</td>
             <td>
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
@@ -275,7 +235,7 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { isLoading, isError, errorMessage, isSuccess } = useSelector(
-    (state: RootState) => state.users,
+    (state: RootState) => state.users
   );
 
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -285,10 +245,6 @@ const DataTable: React.FC<DataTableProps> = ({
   const openInviteModal = () => {
     setIsInviteModalOpen(true);
   };
-
-  // const toggleRowSelected = (id: string) => {
-  //   setSelectedRows((prev) => ({ ...prev, [id]: !prev[id] }));
-  // };
 
   const handleMultipleDelete = (id: string) => {
     setSelectedIds((prevIds) => {
@@ -313,20 +269,14 @@ const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <>
-      <UserInvitedModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-      />
+      <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
 
       {isLoading && <CustomSkeleton />}
 
       {isError && <Typography color="danger">Error: {errorMessage}</Typography>}
 
       {!isLoading && isSuccess && (
-        <Sheet
-          variant="outlined"
-          sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}
-        >
+        <Sheet variant="outlined" sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}>
           <Box
             sx={{
               display: "flex",
@@ -338,22 +288,14 @@ const DataTable: React.FC<DataTableProps> = ({
               mx: 2,
             }}
           >
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
+            <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
               <PeopleOutline />
               <Typography level="title-lg">
                 {tabName === "users" ? "Users" : "User roles"}
               </Typography>
             </Stack>
             {tabName === "users" && (
-              <Button
-                sx={{ backgroundColor: "#3E8A8B" }}
-                onClick={openInviteModal}
-              >
+              <Button sx={{ backgroundColor: "#3E8A8B" }} onClick={openInviteModal}>
                 Invite users
               </Button>
             )}
@@ -490,10 +432,7 @@ const DataTable: React.FC<DataTableProps> = ({
             {/* Table footer */}
             <tfoot>
               <tr>
-                <td
-                  colSpan={headers.length}
-                  style={{ backgroundColor: "white" }}
-                >
+                <td colSpan={headers.length} style={{ backgroundColor: "white" }}>
                   <Box
                     sx={{
                       display: "flex",
@@ -507,7 +446,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     <Typography>
                       {`Showing ${(pageNumber - 1) * rowsPerPage + 1} to ${Math.min(
                         pageNumber * rowsPerPage,
-                        totalRows,
+                        totalRows
                       )} of ${totalRows}`}
                     </Typography>
 
@@ -528,9 +467,7 @@ const DataTable: React.FC<DataTableProps> = ({
                         size="sm"
                         color="neutral"
                         variant="plain"
-                        disabled={
-                          pageNumber >= Math.ceil(totalRows / rowsPerPage)
-                        }
+                        disabled={pageNumber >= Math.ceil(totalRows / rowsPerPage)}
                         onClick={() => handleChangePage(pageNumber + 1)}
                         sx={{ bgcolor: "background.surface" }}
                       >

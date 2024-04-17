@@ -1,18 +1,18 @@
-import { Checkbox } from "@mui/joy";
+import { Checkbox } from '@mui/joy'
 
-type Headers = string | JSX.Element;
+type Headers = string | JSX.Element
 
 const TableColumnsName = () => {
   const headers: Headers[] = [
-    <Checkbox variant="outlined" size="sm" />,
-    "Name",
-    "Role",
-    "Email",
-    "Created on",
-    "Phone",
-    "Status",
-    "",
-  ];
+    <Checkbox variant='outlined' size='sm' />,
+    'Name',
+    'Role',
+    'Email',
+    'Created on',
+    'Phone',
+    'Status',
+    '',
+  ]
 
   return (
     <tr>
@@ -20,7 +20,7 @@ const TableColumnsName = () => {
         <th key={index}>{header}</th>
       ))}
     </tr>
-  );
-};
+  )
+}
 
-export default TableColumnsName;
+export default TableColumnsName

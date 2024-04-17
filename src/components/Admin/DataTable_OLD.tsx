@@ -1,6 +1,6 @@
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import React, { useEffect, useState } from "react";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import React, { useEffect, useState } from 'react'
 import {
   Avatar,
   Box,
@@ -23,7 +23,7 @@ import {
   Stack,
   Table,
   Typography,
-} from "@mui/joy";
+} from '@mui/joy'
 import {
   DeleteForever,
   DensitySmall,
@@ -33,87 +33,63 @@ import {
   Person,
   ViewWeekOutlined,
   ForwardToInboxOutlined,
-} from "@mui/icons-material";
-import { User } from "@/models/user";
-import {
-  phoneFormater,
-  dateFormater,
-  firstLetterUppercase,
-} from "@/utils/helpers/index";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store";
-import {
-  deleteMultipleUsers,
-  fetchUsers,
-} from "@/store/features/users/usersSlice";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import CustomSkeleton from "@/components/UI/CustomSkeleton";
-import StatusChip from "@/components/UI/StatusChip";
-import UserDeleteModal from "./UserDeleteModal";
-import EditUserModal from "./EditUserModal";
-import UserInvitedModal from "./UserInvitedModal";
+} from '@mui/icons-material'
+import { User } from '@/models/user'
+import { phoneFormater, dateFormater, firstLetterUppercase } from '@/utils/helpers/index'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '@/store'
+import { deleteMultipleUsers, fetchUsers } from '@/store/features/users/usersSlice'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
+import CustomSkeleton from '@/components/UI/CustomSkeleton'
+import StatusChip from '@/components/UI/StatusChip'
+import UserDeleteModal from './UserDeleteModal'
+import EditUserModal from './EditUserModal'
+import UserInvitedModal from './UserInvitedModal'
 
-type TabName = "users" | "userRoles";
+type TabName = 'users' | 'userRoles'
 interface DataTableProps {
-  usersOnCurrentPage: User[];
-  headers: (string | JSX.Element)[];
-  pageNumber: number;
-  rowsPerPage: number;
-  totalRows: number;
-  tabName: TabName;
-  handleChangePage: (newPage: number) => void;
+  usersOnCurrentPage: User[]
+  headers: (string | JSX.Element)[]
+  pageNumber: number
+  rowsPerPage: number
+  totalRows: number
+  tabName: TabName
+  handleChangePage: (newPage: number) => void
   handleChangeRowsPerPage: (
     event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
     value: number | null,
-  ) => void;
+  ) => void
 }
 
 const TableRow: React.FC<{
-  user: User;
-  tabName: TabName;
-  handleMultipleDelete: (id: string) => void;
-  isRowSelected: boolean;
-  toggleRowSelected: () => void;
-}> = ({
-  user,
-  tabName,
-  handleMultipleDelete,
-  isRowSelected,
-  toggleRowSelected,
-}) => {
-  const {
-    id,
-    image,
-    name,
-    family,
-    isOwner,
-    role,
-    email,
-    createdOn,
-    countryCode,
-    phone,
-    status,
-  } = user;
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
+  user: User
+  tabName: TabName
+  handleMultipleDelete: (id: string) => void
+  isRowSelected: boolean
+  toggleRowSelected: () => void
+}> = ({ user, tabName, handleMultipleDelete, isRowSelected, toggleRowSelected }) => {
+  const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
+    user
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
 
   const openDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
+    setIsDeleteModalOpen(true)
+  }
 
   const openEditModal = () => {
-    setIsEditModalOpen(true);
-  };
+    setIsEditModalOpen(true)
+  }
 
   const openInviteModal = () => {
-    setIsInviteModalOpen(true);
-  };
+    setIsInviteModalOpen(true)
+  }
 
   const handleCheckboxChange = () => {
-    handleMultipleDelete(id);
-    toggleRowSelected();
-  };
+    handleMultipleDelete(id)
+    toggleRowSelected()
+  }
 
   return (
     <>
@@ -131,28 +107,25 @@ const TableRow: React.FC<{
 
       {/* <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} /> */}
 
-      <tr
-        key={id}
-        style={{ backgroundColor: isRowSelected ? "#e1eded" : "default" }}
-      >
-        {tabName === "users" && (
+      <tr key={id} style={{ backgroundColor: isRowSelected ? '#e1eded' : 'default' }}>
+        {tabName === 'users' && (
           <>
             <td>
               <Checkbox
-                label=""
-                variant="outlined"
-                size="sm"
+                label=''
+                variant='outlined'
+                size='sm'
                 checked={isRowSelected}
                 onChange={handleCheckboxChange}
               />
             </td>
             <td>
-              <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 {image ? (
-                  <Avatar size="md" src={image} alt={name} />
+                  <Avatar size='md' src={image} alt={name} />
                 ) : (
                   <Avatar>
-                    <Person fontSize="large" />
+                    <Person fontSize='large' />
                   </Avatar>
                 )}
                 <Typography>
@@ -160,11 +133,10 @@ const TableRow: React.FC<{
                   {isOwner && (
                     <Chip
                       sx={{
-                        "--Chip-radius": "6px",
-                        background: "#D6EDED",
+                        '--Chip-radius': '6px',
+                        background: '#D6EDED',
                         ml: 2,
-                      }}
-                    >
+                      }}>
                       Owner
                     </Chip>
                   )}
@@ -173,7 +145,7 @@ const TableRow: React.FC<{
             </td>
             <td>{firstLetterUppercase(role)}</td>
             <td>{email}</td>
-            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td style={{ width: 'auto' }}>{dateFormater(createdOn)}</td>
             <td>{`${countryCode} ${phoneFormater(phone)}`}</td>
             <td>
               <StatusChip status={status}>{status}</StatusChip>
@@ -181,14 +153,11 @@ const TableRow: React.FC<{
             <td>
               {/* Actions */}
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: 'neutral' } }}>
                   <MoreVert />
                 </MenuButton>
-                <Menu placement="bottom-end">
-                  {status === "invited" && (
+                <Menu placement='bottom-end'>
+                  {status === 'invited' && (
                     <MenuItem onClick={openInviteModal}>
                       <ListItemDecorator>
                         <ForwardToInboxOutlined />
@@ -205,12 +174,8 @@ const TableRow: React.FC<{
                   </MenuItem>
 
                   <ListDivider />
-                  <MenuItem
-                    variant="soft"
-                    color="danger"
-                    onClick={openDeleteModal}
-                  >
-                    <ListItemDecorator sx={{ color: "inherit" }}>
+                  <MenuItem variant='soft' color='danger' onClick={openDeleteModal}>
+                    <ListItemDecorator sx={{ color: 'inherit' }}>
                       <DeleteForever />
                     </ListItemDecorator>
                     Delete
@@ -220,23 +185,20 @@ const TableRow: React.FC<{
             </td>
           </>
         )}
-        {tabName === "userRoles" && (
+        {tabName === 'userRoles' && (
           <>
             <td>
-              <Checkbox label="" variant="outlined" size="sm" />
+              <Checkbox label='' variant='outlined' size='sm' />
             </td>
             <td>{role}</td>
-            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td style={{ width: 'auto' }}>{dateFormater(createdOn)}</td>
             <td>{status}</td>
             <td>
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: 'neutral' } }}>
                   <MoreVert />
                 </MenuButton>
-                <Menu placement="bottom-end">
+                <Menu placement='bottom-end'>
                   <MenuItem>
                     <ListItemDecorator>
                       <Edit />
@@ -244,8 +206,8 @@ const TableRow: React.FC<{
                     Edit permissions
                   </MenuItem>
                   <ListDivider />
-                  <MenuItem variant="soft" color="danger">
-                    <ListItemDecorator sx={{ color: "inherit" }}>
+                  <MenuItem variant='soft' color='danger'>
+                    <ListItemDecorator sx={{ color: 'inherit' }}>
                       <DeleteForever />
                     </ListItemDecorator>
                     Delete
@@ -257,8 +219,8 @@ const TableRow: React.FC<{
         )}
       </tr>
     </>
-  );
-};
+  )
+}
 
 const DataTable: React.FC<DataTableProps> = ({
   headers,
@@ -270,88 +232,73 @@ const DataTable: React.FC<DataTableProps> = ({
   handleChangeRowsPerPage,
   usersOnCurrentPage,
 }) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>()
   const { isLoading, isError, errorMessage, isSuccess } = useSelector(
     (state: RootState) => state.users,
-  );
+  )
 
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>({});
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
+  const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>({})
 
   const openInviteModal = () => {
-    setIsInviteModalOpen(true);
-  };
+    setIsInviteModalOpen(true)
+  }
 
   const handleMultipleDelete = (id: string) => {
     setSelectedIds((prevIds) => {
       if (prevIds.includes(id)) {
         // If the id is already in the array, remove it
-        return prevIds.filter((prevId) => prevId !== id);
+        return prevIds.filter((prevId) => prevId !== id)
       } else {
         // If the id is not in the array, add it
-        return [...prevIds, id];
+        return [...prevIds, id]
       }
-    });
-  };
+    })
+  }
 
   const handleDeleteMultiple = () => {
-    dispatch(deleteMultipleUsers(selectedIds));
-    setSelectedIds([]);
-  };
+    dispatch(deleteMultipleUsers(selectedIds))
+    setSelectedIds([])
+  }
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    dispatch(fetchUsers())
+  }, [dispatch])
 
   return (
     <>
-      <UserInvitedModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-      />
+      <UserInvitedModal isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
 
       {isLoading && <CustomSkeleton />}
 
-      {isError && <Typography color="danger">Error: {errorMessage}</Typography>}
+      {isError && <Typography color='danger'>Error: {errorMessage}</Typography>}
 
       {!isLoading && isSuccess && (
-        <Sheet
-          variant="outlined"
-          sx={{ minWidth: 1000, boxShadow: "sm", borderRadius: "sm" }}
-        >
+        <Sheet variant='outlined' sx={{ minWidth: 1000, boxShadow: 'sm', borderRadius: 'sm' }}>
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
               gap: 1,
               my: 3,
               mx: 2,
-            }}
-          >
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-            >
+            }}>
+            <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>
               <PeopleOutline />
-              <Typography level="title-lg">
-                {tabName === "users" ? "Users" : "User roles"}
+              <Typography level='title-lg'>
+                {tabName === 'users' ? 'Users' : 'User roles'}
               </Typography>
             </Stack>
-            {tabName === "users" && (
-              <Button
-                sx={{ backgroundColor: "#3E8A8B" }}
-                onClick={openInviteModal}
-              >
+            {tabName === 'users' && (
+              <Button sx={{ backgroundColor: '#3E8A8B' }} onClick={openInviteModal}>
                 Invite users
               </Button>
             )}
-            {tabName === "userRoles" && (
-              <Button sx={{ backgroundColor: "#3E8A8B" }}>New user role</Button>
+            {tabName === 'userRoles' && (
+              <Button sx={{ backgroundColor: '#3E8A8B' }}>New user role</Button>
             )}
           </Box>
 
@@ -360,55 +307,51 @@ const DataTable: React.FC<DataTableProps> = ({
           {/* Table view mode and search bar */}
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
               gap: 1,
               m: 2,
-            }}
-          >
+            }}>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1rem',
+              }}>
               <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
                 spacing={1}
                 border={1}
                 padding={0.75}
-                borderRadius="sm"
-                color={"#5F5876"}
-              >
-                <ViewWeekOutlined fontSize="small" />
-                <Typography level="body-xs" fontWeight="md">
+                borderRadius='sm'
+                color={'#5F5876'}>
+                <ViewWeekOutlined fontSize='small' />
+                <Typography level='body-xs' fontWeight='md'>
                   Columns
                 </Typography>
               </Stack>
 
               <Stack
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
+                direction='row'
+                justifyContent='center'
+                alignItems='center'
                 spacing={1}
                 border={1}
                 padding={0.75}
-                borderRadius="sm"
-                color={"#5F5876"}
-              >
-                <DensitySmall fontSize="small" />
-                <Typography level="body-xs" fontWeight="md">
+                borderRadius='sm'
+                color={'#5F5876'}>
+                <DensitySmall fontSize='small' />
+                <Typography level='body-xs' fontWeight='md'>
                   Density
                 </Typography>
               </Stack>
             </div>
 
-            <Input placeholder="Search"></Input>
+            <Input placeholder='Search'></Input>
           </Box>
 
           <Divider />
@@ -417,26 +360,24 @@ const DataTable: React.FC<DataTableProps> = ({
           {selectedIds.length > 0 && (
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexWrap: 'wrap',
                 gap: 1,
 
-                backgroundColor: "#e1eded",
-              }}
-            >
-              <Typography sx={{ color: "#3E8A8B", m: 2 }}>
+                backgroundColor: '#e1eded',
+              }}>
+              <Typography sx={{ color: '#3E8A8B', m: 2 }}>
                 {selectedIds.length} rows selected
               </Typography>
 
               <Button
                 sx={{ m: 2 }}
-                color="danger"
-                variant="soft"
+                color='danger'
+                variant='soft'
                 onClick={handleDeleteMultiple}
-                startDecorator={<DeleteOutlineOutlinedIcon />}
-              >
+                startDecorator={<DeleteOutlineOutlinedIcon />}>
                 Delete
               </Button>
             </Box>
@@ -446,12 +387,11 @@ const DataTable: React.FC<DataTableProps> = ({
 
           <Table
             hoverRow={true}
-            aria-label="users table"
+            aria-label='users table'
             stickyFooter={false}
             stickyHeader={false}
-            variant="plain"
-            sx={{ tableLayout: "auto" }}
-          >
+            variant='plain'
+            sx={{ tableLayout: 'auto' }}>
             {/* Table header */}
             <thead>
               <tr>
@@ -474,7 +414,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     setSelectedRows((prev) => ({
                       ...prev,
                       [user.id]: !prev[user.id],
-                    }));
+                    }))
                   }}
                 />
               ))}
@@ -483,20 +423,16 @@ const DataTable: React.FC<DataTableProps> = ({
             {/* Table footer */}
             <tfoot>
               <tr>
-                <td
-                  colSpan={headers.length}
-                  style={{ backgroundColor: "white" }}
-                >
+                <td colSpan={headers.length} style={{ backgroundColor: 'white' }}>
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
+                      display: 'flex',
+                      alignItems: 'center',
                       gap: 2,
-                      justifyContent: "space-between",
-                      backgroundColor: "white",
+                      justifyContent: 'space-between',
+                      backgroundColor: 'white',
                       px: 2,
-                    }}
-                  >
+                    }}>
                     <Typography>
                       {`Showing ${(pageNumber - 1) * rowsPerPage + 1} to ${Math.min(
                         pageNumber * rowsPerPage,
@@ -504,46 +440,40 @@ const DataTable: React.FC<DataTableProps> = ({
                       )} of ${totalRows}`}
                     </Typography>
 
-                    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                       <IconButton
-                        size="sm"
-                        color="neutral"
-                        variant="plain"
+                        size='sm'
+                        color='neutral'
+                        variant='plain'
                         disabled={pageNumber === 1}
                         onClick={() => handleChangePage(pageNumber - 1)}
-                        sx={{ bgcolor: "background.surface" }}
-                      >
+                        sx={{ bgcolor: 'background.surface' }}>
                         <KeyboardArrowLeftIcon />
                         <Typography>Back</Typography>
                       </IconButton>
                       <Typography>{pageNumber}</Typography>
                       <IconButton
-                        size="sm"
-                        color="neutral"
-                        variant="plain"
-                        disabled={
-                          pageNumber >= Math.ceil(totalRows / rowsPerPage)
-                        }
+                        size='sm'
+                        color='neutral'
+                        variant='plain'
+                        disabled={pageNumber >= Math.ceil(totalRows / rowsPerPage)}
                         onClick={() => handleChangePage(pageNumber + 1)}
-                        sx={{ bgcolor: "background.surface" }}
-                      >
+                        sx={{ bgcolor: 'background.surface' }}>
                         <Typography>Next</Typography>
                         <KeyboardArrowRightIcon />
                       </IconButton>
                     </Box>
 
                     <FormControl
-                      orientation="horizontal"
-                      size="sm"
-                      sx={{ display: "flex", alignItems: "center" }}
-                    >
+                      orientation='horizontal'
+                      size='sm'
+                      sx={{ display: 'flex', alignItems: 'center' }}>
                       <Typography sx={{ mr: 1 }}>Show</Typography>
                       <Select
                         onChange={handleChangeRowsPerPage}
                         value={rowsPerPage}
                         defaultValue={10}
-                        variant="plain"
-                      >
+                        variant='plain'>
                         <Option value={5}>5</Option>
                         <Option value={10}>10</Option>
                         <Option value={25}>25</Option>
@@ -558,7 +488,7 @@ const DataTable: React.FC<DataTableProps> = ({
         </Sheet>
       )}
     </>
-  );
-};
+  )
+}
 
-export default DataTable;
+export default DataTable

@@ -1,26 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface SelectedRowsState {
-  selectedRows: Record<string, boolean>;
+  selectedRows: Record<string, boolean>
 }
 
 const initialState: SelectedRowsState = {
   selectedRows: {},
-};
+}
 
 export const tableSlice = createSlice({
-  name: "table",
+  name: 'table',
   initialState,
   reducers: {
-    setSelectedRows: (
-      state,
-      action: PayloadAction<Record<string, boolean>>,
-    ) => {
-      state.selectedRows = action.payload;
+    setSelectedRows: (state, action: PayloadAction<Record<string, boolean>>) => {
+      state.selectedRows = action.payload
     },
   },
-});
+})
 
-export const { setSelectedRows } = tableSlice.actions;
+export const { setSelectedRows } = tableSlice.actions
 
-export default tableSlice.reducer;
+export default tableSlice.reducer

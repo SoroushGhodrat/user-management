@@ -1,7 +1,7 @@
-import UsersTable from "./UsersTable";
+import UsersTable from './UsersTable'
 
 const Users: React.FC = () => {
-  return <UsersTable />;
-};
+  return <UsersTable />
+}
 
-export default Users;
+export default Users

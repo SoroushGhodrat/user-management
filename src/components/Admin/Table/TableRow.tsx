@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react'
 import {
   Avatar,
   Box,
@@ -12,83 +12,62 @@ import {
   MenuButton,
   MenuItem,
   Typography,
-} from "@mui/joy";
-import {
-  DeleteForever,
-  Edit,
-  MoreVert,
-  Person,
-  ForwardToInboxOutlined,
-} from "@mui/icons-material";
-import { User } from "@/models/user";
-import {
-  phoneFormater,
-  dateFormater,
-  firstLetterUppercase,
-} from "@/utils/helpers/index";
-import StatusChip from "@/components/UI/StatusChip";
-import UserDeleteModal from "../UserDeleteModal";
-import EditUserModal from "../EditUserModal";
-import UserInvitedModal from "../UserInvitedModal";
-import { TabName } from "@/models/user";
+} from '@mui/joy'
+import { DeleteForever, Edit, MoreVert, Person, ForwardToInboxOutlined } from '@mui/icons-material'
+import { User } from '@/models/user'
+import { phoneFormater, dateFormater, firstLetterUppercase } from '@/utils/helpers/index'
+import StatusChip from '@/components/UI/StatusChip'
+import UserDeleteModal from '../UserDeleteModal'
+import EditUserModal from '../EditUserModal'
+import UserInvitedModal from '../UserInvitedModal'
+import { TabName } from '@/models/user'
 
 const TableRow: React.FC<{
-  user: User;
-  handleMultipleDelete?: (id: string) => void;
-  isRowSelected?: any;
-  toggleRowSelected: () => void;
-  selectedRows: Record<string, boolean>;
+  user: User
+  handleMultipleDelete?: (id: string) => void
+  isRowSelected?: any
+  toggleRowSelected: () => void
+  selectedRows: Record<string, boolean>
 }> = ({ user, toggleRowSelected, selectedRows }) => {
-  const {
-    id,
-    image,
-    name,
-    family,
-    isOwner,
-    role,
-    email,
-    createdOn,
-    countryCode,
-    phone,
-    status,
-  } = user;
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
-  const [resendEmail, setResendEmail] = useState<string>("");
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
+    user
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
+  const [resendEmail, setResendEmail] = useState<string>('')
+  const [selectedIds, setSelectedIds] = useState<string[]>([])
 
-  const tabName = (localStorage.getItem("tabName") as TabName) || "users";
+  const tabName = (localStorage.getItem('tabName') as TabName) || 'users'
 
   const openDeleteModal = () => {
-    setIsDeleteModalOpen(true);
-  };
+    setIsDeleteModalOpen(true)
+  }
 
   const openEditModal = () => {
-    setIsEditModalOpen(true);
-  };
+    setIsEditModalOpen(true)
+  }
 
   const openInviteModal = (email: string) => {
-    setIsInviteModalOpen(true);
-    setResendEmail(email);
-  };
+    setIsInviteModalOpen(true)
+    setResendEmail(email)
+  }
 
   const handleMultipleDelete = (id: string) => {
     setSelectedIds((prevIds) => {
       if (prevIds.includes(id)) {
         // If the id is already in the array, remove it
-        return prevIds.filter((prevId) => prevId !== id);
+        return prevIds.filter((prevId) => prevId !== id)
       } else {
         // If the id is not in the array, add it
-        return [...prevIds, id];
+        return [...prevIds, id]
       }
-    });
-  };
+    })
+  }
 
   const handleCheckboxChange = () => {
-    handleMultipleDelete(id);
-    toggleRowSelected();
-  };
+    handleMultipleDelete(id)
+    toggleRowSelected()
+  }
 
   return (
     <>
@@ -105,34 +84,31 @@ const TableRow: React.FC<{
       />
 
       <UserInvitedModal
-        invitationType="resent"
+        invitationType='resent'
         resendEmail={resendEmail}
         isOpen={isInviteModalOpen}
         onClose={() => setIsInviteModalOpen(false)}
       />
 
-      <tr
-        key={id}
-        style={{ backgroundColor: user.id in selectedRows ? "#e1eded" : "" }}
-      >
-        {tabName === "users" && (
+      <tr key={id} style={{ backgroundColor: user.id in selectedRows ? '#e1eded' : '' }}>
+        {tabName === 'users' && (
           <>
             <td>
               <Checkbox
-                label=""
-                variant="outlined"
-                size="sm"
+                label=''
+                variant='outlined'
+                size='sm'
                 // checked={isRowSelected}
                 onChange={handleCheckboxChange}
               />
             </td>
             <td>
-              <Box sx={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 {image ? (
-                  <Avatar size="md" src={image} alt={name} />
+                  <Avatar size='md' src={image} alt={name} />
                 ) : (
                   <Avatar>
-                    <Person fontSize="large" />
+                    <Person fontSize='large' />
                   </Avatar>
                 )}
                 <Typography>
@@ -140,11 +116,10 @@ const TableRow: React.FC<{
                   {isOwner && (
                     <Chip
                       sx={{
-                        "--Chip-radius": "6px",
-                        background: "#D6EDED",
+                        '--Chip-radius': '6px',
+                        background: '#D6EDED',
                         ml: 2,
-                      }}
-                    >
+                      }}>
                       Owner
                     </Chip>
                   )}
@@ -153,7 +128,7 @@ const TableRow: React.FC<{
             </td>
             <td>{firstLetterUppercase(role)}</td>
             <td>{email}</td>
-            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td style={{ width: 'auto' }}>{dateFormater(createdOn)}</td>
             <td>{`${countryCode} ${phoneFormater(phone)}`}</td>
             <td>
               <StatusChip status={status}>{status}</StatusChip>
@@ -161,14 +136,11 @@ const TableRow: React.FC<{
             <td>
               {/* Actions */}
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: 'neutral' } }}>
                   <MoreVert />
                 </MenuButton>
-                <Menu placement="bottom-end">
-                  {status === "invited" && (
+                <Menu placement='bottom-end'>
+                  {status === 'invited' && (
                     <MenuItem onClick={() => openInviteModal(email)}>
                       <ListItemDecorator>
                         <ForwardToInboxOutlined />
@@ -185,12 +157,8 @@ const TableRow: React.FC<{
                   </MenuItem>
 
                   <ListDivider />
-                  <MenuItem
-                    variant="soft"
-                    color="danger"
-                    onClick={openDeleteModal}
-                  >
-                    <ListItemDecorator sx={{ color: "inherit" }}>
+                  <MenuItem variant='soft' color='danger' onClick={openDeleteModal}>
+                    <ListItemDecorator sx={{ color: 'inherit' }}>
                       <DeleteForever />
                     </ListItemDecorator>
                     Delete
@@ -200,23 +168,20 @@ const TableRow: React.FC<{
             </td>
           </>
         )}
-        {tabName === "userRoles" && (
+        {tabName === 'userRoles' && (
           <>
             <td>
-              <Checkbox label="" variant="outlined" size="sm" />
+              <Checkbox label='' variant='outlined' size='sm' />
             </td>
             <td>{role}</td>
-            <td style={{ width: "auto" }}>{dateFormater(createdOn)}</td>
+            <td style={{ width: 'auto' }}>{dateFormater(createdOn)}</td>
             <td>{status}</td>
             <td>
               <Dropdown>
-                <MenuButton
-                  slots={{ root: IconButton }}
-                  slotProps={{ root: { color: "neutral" } }}
-                >
+                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: 'neutral' } }}>
                   <MoreVert />
                 </MenuButton>
-                <Menu placement="bottom-end">
+                <Menu placement='bottom-end'>
                   <MenuItem>
                     <ListItemDecorator>
                       <Edit />
@@ -224,8 +189,8 @@ const TableRow: React.FC<{
                     Edit permissions
                   </MenuItem>
                   <ListDivider />
-                  <MenuItem variant="soft" color="danger">
-                    <ListItemDecorator sx={{ color: "inherit" }}>
+                  <MenuItem variant='soft' color='danger'>
+                    <ListItemDecorator sx={{ color: 'inherit' }}>
                       <DeleteForever />
                     </ListItemDecorator>
                     Delete
@@ -237,7 +202,7 @@ const TableRow: React.FC<{
         )}
       </tr>
     </>
-  );
-};
+  )
+}
 
-export default TableRow;
+export default TableRow

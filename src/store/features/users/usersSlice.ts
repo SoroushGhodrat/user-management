@@ -1,16 +1,16 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { User } from "@/models/user";
-import { AxiosResponse } from "axios";
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
+import { User } from '@/models/user'
+import { AxiosResponse } from 'axios'
 interface UsersState {
-  users: User[];
-  isLoading: boolean;
-  isError: boolean;
-  errorMessage: string | null | undefined;
-  isSuccess: boolean;
-  isDeleteUserSuccess: boolean;
-  isDeleteMultipleUsersSuccess: boolean;
-  isUpdateUserSuccess: boolean;
+  users: User[]
+  isLoading: boolean
+  isError: boolean
+  errorMessage: string | null | undefined
+  isSuccess: boolean
+  isDeleteUserSuccess: boolean
+  isDeleteMultipleUsersSuccess: boolean
+  isUpdateUserSuccess: boolean
 }
 
 const initialState: UsersState = {
@@ -22,194 +22,183 @@ const initialState: UsersState = {
   isDeleteUserSuccess: false,
   isDeleteMultipleUsersSuccess: false,
   isUpdateUserSuccess: false,
-};
+}
 
 // Async thunk for fetching users
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   const response = await new Promise<AxiosResponse<User[]>>((resolve) =>
     setTimeout(async () => {
-      const result = await axios.get<User[]>(
-        "http://localhost:8000/DUMMY_USERS",
-      );
-      resolve(result);
+      const result = await axios.get<User[]>('http://localhost:8000/DUMMY_USERS')
+      resolve(result)
     }, 2000),
-  );
+  )
 
-  return response.data;
-});
+  return response.data
+})
 
 // Async thunk for updating user
 export const updateUser = createAsyncThunk(
-  "users/updateUser",
+  'users/updateUser',
   async (user: User, { rejectWithValue }) => {
     try {
-      const response = await axios.put<User>(
-        `http://localhost:8000/DUMMY_USERS/${user.id}`,
-        user,
-      );
-      return response.data;
+      const response = await axios.put<User>(`http://localhost:8000/DUMMY_USERS/${user.id}`, user)
+      return response.data
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         if (!err.response) {
-          throw err;
+          throw err
         }
-        return rejectWithValue(err.response.data);
+        return rejectWithValue(err.response.data)
       } else {
-        throw err;
+        throw err
       }
     }
   },
-);
+)
 
 // Async thunk for deleting user
 export const deleteUser = createAsyncThunk(
-  "users/deleteUser",
+  'users/deleteUser',
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `http://localhost:8000/DUMMY_USERS/${userId}`,
-      );
+      const response = await axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`)
 
       // Check if the delete operation was successful
       if (response.status !== 200) {
-        return rejectWithValue("Failed to delete user");
+        return rejectWithValue('Failed to delete user')
       }
 
-      return userId;
+      return userId
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         if (!err.response) {
-          throw err;
+          throw err
         }
-        return rejectWithValue(err.response.data);
+        return rejectWithValue(err.response.data)
       } else {
-        throw err;
+        throw err
       }
     }
   },
-);
+)
 
 export const deleteMultipleUsers = createAsyncThunk(
-  "users/deleteMultipleUsers",
+  'users/deleteMultipleUsers',
   async (userIds: string[], { rejectWithValue }) => {
     try {
       const responses = await Promise.all(
-        userIds.map((userId) =>
-          axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`),
-        ),
-      );
+        userIds.map((userId) => axios.delete(`http://localhost:8000/DUMMY_USERS/${userId}`)),
+      )
 
       // Check if all delete operations were successful
       if (responses.some((response) => response.status !== 200)) {
-        return rejectWithValue("Failed to delete one or more users");
+        return rejectWithValue('Failed to delete one or more users')
       }
 
-      return userIds;
+      return userIds
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         if (!err.response) {
-          throw err;
+          throw err
         }
-        return rejectWithValue(err.response.data);
+        return rejectWithValue(err.response.data)
       } else {
-        throw err;
+        throw err
       }
     }
   },
-);
+)
 
 const usersSlice = createSlice({
-  name: "users",
+  name: 'users',
   initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
+      state.isLoading = action.payload
     },
     setError: (state, action: PayloadAction<boolean>) => {
-      state.isError = action.payload;
+      state.isError = action.payload
     },
     setErrorMsg: (state, action: PayloadAction<string | null>) => {
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload
     },
     setSuccess: (state, action: PayloadAction<boolean>) => {
-      state.isSuccess = action.payload;
+      state.isSuccess = action.payload
     },
     setDeleteUserStatus: (state, action: PayloadAction<boolean>) => {
-      state.isDeleteUserSuccess = action.payload;
+      state.isDeleteUserSuccess = action.payload
     },
     setDeleteMultipleUsersStatus: (state, action: PayloadAction<boolean>) => {
-      state.isDeleteMultipleUsersSuccess = action.payload;
+      state.isDeleteMultipleUsersSuccess = action.payload
     },
     setUpdateUserStatus: (state, action: PayloadAction<boolean>) => {
-      state.isUpdateUserSuccess = action.payload;
+      state.isUpdateUserSuccess = action.payload
     },
   },
   extraReducers: (builder) => {
     // Fetch users
     builder
       .addCase(fetchUsers.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = action.payload;
-        state.isLoading = false;
-        state.isSuccess = true;
+        state.users = action.payload
+        state.isLoading = false
+        state.isSuccess = true
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.errorMessage = action.error.message;
-      });
+        state.isLoading = false
+        state.isError = true
+        state.errorMessage = action.error.message
+      })
     // Update user
     builder
       .addCase(updateUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.users = state.users.map((user) =>
           user.id === action.payload.id ? action.payload : user,
-        );
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.isUpdateUserSuccess = true;
+        )
+        state.isLoading = false
+        state.isSuccess = true
+        state.isUpdateUserSuccess = true
       })
       .addCase(updateUser.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.errorMessage = action.error.message;
-      });
+        state.isLoading = false
+        state.isError = true
+        state.errorMessage = action.error.message
+      })
     // Delete a single user
     builder
       .addCase(deleteUser.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        state.users = state.users.filter((user) => user.id !== action.payload);
-        state.isLoading = false;
-        state.isDeleteUserSuccess = true;
+        state.users = state.users.filter((user) => user.id !== action.payload)
+        state.isLoading = false
+        state.isDeleteUserSuccess = true
       })
       .addCase(deleteUser.rejected, (state) => {
-        state.isLoading = false;
-        state.isError = true;
-      });
+        state.isLoading = false
+        state.isError = true
+      })
     // Delete multiple users
     builder
       .addCase(deleteMultipleUsers.pending, (state) => {
-        state.isLoading = true;
+        state.isLoading = true
       })
       .addCase(deleteMultipleUsers.fulfilled, (state, action) => {
-        state.users = state.users.filter(
-          (user) => !action.payload.includes(user.id),
-        );
-        state.isLoading = false;
-        state.isDeleteMultipleUsersSuccess = true;
+        state.users = state.users.filter((user) => !action.payload.includes(user.id))
+        state.isLoading = false
+        state.isDeleteMultipleUsersSuccess = true
       })
       .addCase(deleteMultipleUsers.rejected, (state) => {
-        state.isLoading = false;
-        state.isError = true;
-      });
+        state.isLoading = false
+        state.isError = true
+      })
   },
-});
+})
 
 export const {
   setLoading,
@@ -219,6 +208,6 @@ export const {
   setDeleteUserStatus,
   setDeleteMultipleUsersStatus,
   setUpdateUserStatus,
-} = usersSlice.actions;
+} = usersSlice.actions
 
-export default usersSlice.reducer;
+export default usersSlice.reducer

@@ -12,7 +12,10 @@ export const tableSlice = createSlice({
   name: "table",
   initialState,
   reducers: {
-    setSelectedRows: (state, action: PayloadAction<Record<string, boolean>>) => {
+    setSelectedRows: (
+      state,
+      action: PayloadAction<Record<string, boolean>>,
+    ) => {
       state.selectedRows = action.payload;
     },
   },

@@ -1,6 +1,6 @@
 import { Checkbox } from "@mui/joy";
 import { useEffect, useState } from "react";
-import DataTable from "./DataTable";
+import DataTable from "./DataTable_OLD";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
 import { fetchUsers } from "@/store/features/users/usersSlice";

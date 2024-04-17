@@ -12,5 +12,5 @@ export const firstLetterUppercase = (str: string): string => {
 };
 
 export const emailNormalizer = (email: string): string => {
-  return email.trim().toLowerCase().replace(/\s/g, '');
+  return email.trim().toLowerCase().replace(/\s/g, "");
 };

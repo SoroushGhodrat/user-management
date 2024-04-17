@@ -11,9 +11,11 @@ import Snackbar from "@/components/UI/SnackBar";
 
 const Admin: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isDeleteUserSuccess, isUpdateUserSuccess, isDeleteMultipleUsersSuccess } = useSelector(
-    (state: RootState) => state.users
-  );
+  const {
+    isDeleteUserSuccess,
+    isUpdateUserSuccess,
+    isDeleteMultipleUsersSuccess,
+  } = useSelector((state: RootState) => state.users);
   const onClose = () => {
     dispatch(setDeleteUserStatus(false));
     dispatch(setUpdateUserStatus(false));

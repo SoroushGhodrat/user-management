@@ -1,5 +1,12 @@
 import { User } from "@/models/user";
-import { Box, FormControl, IconButton, Select, Typography, Option } from "@mui/joy";
+import {
+  Box,
+  FormControl,
+  IconButton,
+  Select,
+  Typography,
+  Option,
+} from "@mui/joy";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useState } from "react";
@@ -18,12 +25,15 @@ const TableFooter: React.FC<TableHeaderProps> = ({ users }) => {
 
   const handleChangeRowsPerPage = (
     _event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
-    value: number | null
+    value: number | null,
   ) => {
     setRowsPerPage(value as number);
   };
 
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage);
+  const usersOnCurrentPage = users.slice(
+    (pageNumber - 1) * rowsPerPage,
+    pageNumber * rowsPerPage,
+  );
 
   return (
     <tr>
@@ -42,7 +52,7 @@ const TableFooter: React.FC<TableHeaderProps> = ({ users }) => {
           <Typography>
             {`Showing ${(pageNumber - 1) * rowsPerPage + 1} to ${Math.min(
               pageNumber * rowsPerPage,
-              users.length
+              users.length,
             )} of ${users.length}`}
           </Typography>
 

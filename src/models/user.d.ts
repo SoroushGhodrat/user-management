@@ -8,6 +8,10 @@ export type Role =
 
 export type Status = "active" | "inactive" | "blocked" | "invited";
 
+export type TabName = "users" | "userRoles";
+
+export type InvitationType = "resent" | "multy";
+
 // interfaces
 export interface User {
   id: string;

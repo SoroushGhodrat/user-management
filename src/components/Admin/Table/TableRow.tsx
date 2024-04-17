@@ -13,9 +13,19 @@ import {
   MenuItem,
   Typography,
 } from "@mui/joy";
-import { DeleteForever, Edit, MoreVert, Person, ForwardToInboxOutlined } from "@mui/icons-material";
+import {
+  DeleteForever,
+  Edit,
+  MoreVert,
+  Person,
+  ForwardToInboxOutlined,
+} from "@mui/icons-material";
 import { User } from "@/models/user";
-import { phoneFormater, dateFormater, firstLetterUppercase } from "@/utils/helpers/index";
+import {
+  phoneFormater,
+  dateFormater,
+  firstLetterUppercase,
+} from "@/utils/helpers/index";
 import StatusChip from "@/components/UI/StatusChip";
 import UserDeleteModal from "../UserDeleteModal";
 import EditUserModal from "../EditUserModal";
@@ -29,8 +39,19 @@ const TableRow: React.FC<{
   toggleRowSelected: () => void;
   selectedRows: Record<string, boolean>;
 }> = ({ user, toggleRowSelected, selectedRows }) => {
-  const { id, image, name, family, isOwner, role, email, createdOn, countryCode, phone, status } =
-    user;
+  const {
+    id,
+    image,
+    name,
+    family,
+    isOwner,
+    role,
+    email,
+    createdOn,
+    countryCode,
+    phone,
+    status,
+  } = user;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
@@ -90,7 +111,10 @@ const TableRow: React.FC<{
         onClose={() => setIsInviteModalOpen(false)}
       />
 
-      <tr key={id} style={{ backgroundColor: user.id in selectedRows ? "#e1eded" : "" }}>
+      <tr
+        key={id}
+        style={{ backgroundColor: user.id in selectedRows ? "#e1eded" : "" }}
+      >
         {tabName === "users" && (
           <>
             <td>
@@ -137,7 +161,10 @@ const TableRow: React.FC<{
             <td>
               {/* Actions */}
               <Dropdown>
-                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
+                <MenuButton
+                  slots={{ root: IconButton }}
+                  slotProps={{ root: { color: "neutral" } }}
+                >
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">
@@ -158,7 +185,11 @@ const TableRow: React.FC<{
                   </MenuItem>
 
                   <ListDivider />
-                  <MenuItem variant="soft" color="danger" onClick={openDeleteModal}>
+                  <MenuItem
+                    variant="soft"
+                    color="danger"
+                    onClick={openDeleteModal}
+                  >
                     <ListItemDecorator sx={{ color: "inherit" }}>
                       <DeleteForever />
                     </ListItemDecorator>
@@ -179,7 +210,10 @@ const TableRow: React.FC<{
             <td>{status}</td>
             <td>
               <Dropdown>
-                <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: "neutral" } }}>
+                <MenuButton
+                  slots={{ root: IconButton }}
+                  slotProps={{ root: { color: "neutral" } }}
+                >
                   <MoreVert />
                 </MenuButton>
                 <Menu placement="bottom-end">

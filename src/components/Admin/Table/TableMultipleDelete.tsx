@@ -6,11 +6,16 @@ import { User } from "@/models/user";
 
 interface SelectedRows {
   selectedRows: Record<string, boolean>;
-  setSelectedRows?: React.Dispatch<React.SetStateAction<Record<string, boolean>>>;
+  setSelectedRows?: React.Dispatch<
+    React.SetStateAction<Record<string, boolean>>
+  >;
   users: User[];
 }
 
-const TableMultipleDelete: React.FC<SelectedRows> = ({ users, selectedRows }) => {
+const TableMultipleDelete: React.FC<SelectedRows> = ({
+  users,
+  selectedRows,
+}) => {
   const userIds = Object.keys(selectedRows);
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

@@ -14,11 +14,16 @@ import { setSelectedRows } from "@/store/features/table/selectedRowsSlice";
 const UsersTable = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { users } = useSelector((state: RootState) => state.users);
-  const selectedRows = useSelector((state: RootState) => state.table.selectedRows);
+  const selectedRows = useSelector(
+    (state: RootState) => state.table.selectedRows,
+  );
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage);
+  const usersOnCurrentPage = users.slice(
+    (pageNumber - 1) * rowsPerPage,
+    pageNumber * rowsPerPage,
+  );
 
   // Check if any row is selected or not
   const areRowsSelected = Object.keys(selectedRows).length > 0;
@@ -49,7 +54,9 @@ const UsersTable = () => {
       <TableViewMode />
 
       {/* Render multiple deletion CTA */}
-      {areRowsSelected && <TableMultipleDelete selectedRows={selectedRows} users={users} />}
+      {areRowsSelected && (
+        <TableMultipleDelete selectedRows={selectedRows} users={users} />
+      )}
 
       <Table
         hoverRow={true}

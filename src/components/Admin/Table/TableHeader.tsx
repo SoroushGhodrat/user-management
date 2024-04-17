@@ -14,7 +14,11 @@ const TableHeader = () => {
 
   return (
     <>
-      <UserInvitedModal invitationType="multy"  isOpen={isInviteModalOpen} onClose={() => setIsInviteModalOpen(false)} />
+      <UserInvitedModal
+        invitationType="multy"
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+      />
 
       <Box
         sx={{
@@ -37,7 +41,9 @@ const TableHeader = () => {
           }}
         >
           <PeopleOutline />
-          <Typography level="title-lg">{tabName === "users" ? "Users" : "User roles"}</Typography>
+          <Typography level="title-lg">
+            {tabName === "users" ? "Users" : "User roles"}
+          </Typography>
         </Box>
         {
           <Button sx={{ backgroundColor: "#3E8A8B" }} onClick={openInviteModal}>

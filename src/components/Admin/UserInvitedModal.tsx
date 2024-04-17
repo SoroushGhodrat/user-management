@@ -16,10 +16,13 @@ import Add from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
 import { emailValidator, emailNormalizer } from "@/utils/helpers/index";
+import { InvitationType } from "@/models/user";
 
 type DeleteModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  invitationType: InvitationType;
+  resendEmail?: string;
 };
 
 interface Email {
@@ -27,7 +30,12 @@ interface Email {
   email: string;
 }
 
-const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
+const UserInvitedModal: React.FC<DeleteModalProps> = ({
+  isOpen,
+  onClose,
+  invitationType,
+  resendEmail,
+}) => {
   const [email, setEmail] = useState<string>("");
   const [emailsList, setEmailsList] = useState<Email[]>([]);
   const [error, setError] = useState<string>("");
@@ -74,74 +82,76 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <ForwardToInboxOutlined sx={{ pr: 1 }} />
-            Invite users
+            {invitationType === "multy" ? "Invite users" : "Resend invitation"}
           </Box>
           <ClearIcon onClick={onClose} sx={{ pr: 1, cursor: "pointer" }} />
         </DialogTitle>
 
         <Divider inset="none" />
 
-        <Box>
-          <FormLabel>Email *</FormLabel>
+        {invitationType === "multy" && (
+          <Box>
+            <FormLabel>Email *</FormLabel>
 
-          {/* Added email's list */}
-          {emailsList.length !== 0 &&
-            emailsList.map((email) => (
-              <Box key={email.id} display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
-                <Input
-                  name="email"
-                  type="email"
-                  value={email.email}
-                  required
-                  placeholder="example@email.com"
-                  style={{ width: "100%" }}
-                  onChange={handleInputEmails}
-                />
-                <Button
-                  variant="outlined"
-                  color="danger"
-                  sx={{ p: 1, ml: 2 }}
-                  onClick={handleDeleteEmail(email.id)}
-                >
-                  <DeleteOutlineOutlinedIcon />
-                </Button>
-              </Box>
-            ))}
+            {/* Added email's list */}
+            {emailsList.length !== 0 &&
+              emailsList.map((email) => (
+                <Box key={email.id} display="flex" justifyContent="space-between" sx={{ mb: 2 }}>
+                  <Input
+                    name="email"
+                    type="email"
+                    value={email.email}
+                    required
+                    placeholder="example@email.com"
+                    style={{ width: "100%" }}
+                    onChange={handleInputEmails}
+                  />
+                  <Button
+                    variant="outlined"
+                    color="danger"
+                    sx={{ p: 1, ml: 2 }}
+                    onClick={handleDeleteEmail(email.id)}
+                  >
+                    <DeleteOutlineOutlinedIcon />
+                  </Button>
+                </Box>
+              ))}
 
-          {/* Add email form */}
-          <Box display="flex" justifyContent="space-between">
-            <Input
-              name="email"
-              type="email"
-              value={email}
-              required
-              placeholder="example@email.com"
-              style={{ width: "100%" }}
-              onChange={handleInputEmails}
-            />
-            <Button
-              variant="outlined"
-              color="neutral"
-              sx={{ p: 1, ml: 1 }}
-              onClick={handleCollectEmail}
-            >
-              <Add />
-            </Button>
+            {/* Add email form */}
+            <Box display="flex" justifyContent="space-between">
+              <Input
+                name="email"
+                type="email"
+                value={email}
+                required
+                placeholder="example@email.com"
+                style={{ width: "100%" }}
+                onChange={handleInputEmails}
+              />
+              <Button
+                variant="outlined"
+                color="neutral"
+                sx={{ p: 1, ml: 1 }}
+                onClick={handleCollectEmail}
+              >
+                <Add />
+              </Button>
+            </Box>
+            <Typography color="danger" level="body-md">
+              {error}
+            </Typography>
           </Box>
-          <Typography color="danger" level="body-md">
-            {error}
-          </Typography>
-        </Box>
+        )}
 
-        {/* <Box>
-          <Button variant="outlined" color="neutral" startDecorator={<Add />}>
-            Add more
-          </Button>
-        </Box> */}
+        {invitationType === "resent" && (
+          <Box>
+            <Input name="email" type="email" value={resendEmail} required placeholder="" />
+          </Box>
+        )}
 
         <DialogActions>
           <Button
-            disabled={emailsList.length === 0}
+            disabled={invitationType === "multy" && emailsList.length === 0}
             variant="solid"
             sx={{
               backgroundColor: emailsList.length < 0 ? "neutral" : "#3E8A8B",
@@ -149,7 +159,8 @@ const UserInvitedModal: React.FC<DeleteModalProps> = ({ isOpen, onClose }) => {
             }}
             onClick={handleSentInvitation}
           >
-            Send invite {emailsList.length > 0 && `(${emailsList.length})`}
+            {invitationType === "multy" ? "Send invite" : "Resend"}
+            {emailsList.length > 0 && `(${emailsList.length})`}
           </Button>
           <Button variant="outlined" color="neutral" onClick={onClose}>
             Cancle

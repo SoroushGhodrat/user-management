@@ -15,10 +15,9 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ClearIcon from "@mui/icons-material/Clear";
 import { User } from "@/models/user";
 import { useDispatch } from "react-redux";
-import {
-  deleteUser,
-  setDeleteUserStatus,
-} from "@/store/features/users/usersSlice";
+import { deleteMultipleUsers, deleteUser } from "@/store/features/users/usersSlice";
+
+import { setSelectedRows } from "@/store/features/table/selectedRowsSlice";
 import { AppDispatch } from "@/store";
 
 type UserDeleteModalProps = {
@@ -27,26 +26,23 @@ type UserDeleteModalProps = {
   user: User;
 };
 
-const UserDeleteModal: React.FC<UserDeleteModalProps> = ({
-  isOpen,
-  onClose,
-  user,
-}) => {
+const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch: AppDispatch = useDispatch();
 
+  const userIds = Array.isArray(user) ? user.map((u) => u.id) : [];
+
   const handleDeleteUser = (userId: string) => {
-    dispatch(deleteUser(userId));
-    dispatch(setDeleteUserStatus(true));
+    if (Array.isArray(user)) {
+      dispatch(deleteMultipleUsers(userIds));
+      dispatch(setSelectedRows({}));
+    } else {
+      dispatch(deleteUser(userId));
+    }
   };
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog
-        variant="outlined"
-        role="alertdialog"
-        size={"lg"}
-        sx={{ p: 3, minWidth: 500 }}
-      >
+      <ModalDialog variant="outlined" role="alertdialog" size={"lg"} sx={{ p: 3, minWidth: 500 }}>
         <DialogTitle
           sx={{
             display: "flex",
@@ -56,7 +52,11 @@ const UserDeleteModal: React.FC<UserDeleteModalProps> = ({
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <DeleteOutlineIcon sx={{ pr: 1 }} />
-            Delete: {user.name} {user.family}
+            {Array.isArray(user) && user.length > 1 && "Delete Multiple Users"}
+            {Array.isArray(user) &&
+              user.length === 1 &&
+              `Delete: ${user[0].name} ${user[0].family}`}
+            {!Array.isArray(user) && `${user.name} ${user.family}`}
           </Box>
           <ClearIcon onClick={onClose} sx={{ pr: 1, cursor: "pointer" }} />
         </DialogTitle>
@@ -66,23 +66,19 @@ const UserDeleteModal: React.FC<UserDeleteModalProps> = ({
         <DialogContent>Are you sure you want to delete:</DialogContent>
 
         <List marker="circle">
-          <ListItem>
-            {user.name} {user.family}
-          </ListItem>
+          {Array.isArray(user) ? (
+            user.map((u) => <ListItem key={u.id}>{`${u.name} ${u.family}`}</ListItem>)
+          ) : (
+            <ListItem>{`${user.name} ${user.family}`}</ListItem>
+          )}
         </List>
 
         <DialogContent>
-          <Typography color="danger">
-            NOTE: This action is permanent.
-          </Typography>
+          <Typography color="danger">NOTE: This action is permanent.</Typography>
         </DialogContent>
 
         <DialogActions>
-          <Button
-            variant="solid"
-            color="danger"
-            onClick={() => handleDeleteUser(user.id)}
-          >
+          <Button variant="solid" color="danger" onClick={() => handleDeleteUser(user.id)}>
             Yes, delete
           </Button>
           <Button variant="outlined" color="neutral" onClick={onClose}>

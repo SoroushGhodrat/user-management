@@ -2,20 +2,25 @@ import { Box, Typography } from "@mui/joy";
 import UserManagement from "./UserManagement.page";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store";
-import { setDeleteUserStatus, setUpdateUserStatus } from "@/store/features/users/usersSlice";
+import {
+  setDeleteMultipleUsersStatus,
+  setDeleteUserStatus,
+  setUpdateUserStatus,
+} from "@/store/features/users/usersSlice";
 import Snackbar from "@/components/UI/SnackBar";
 
 const Admin: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { isDeleteUserSuccess, isUpdateUserSuccess } = useSelector(
+  const { isDeleteUserSuccess, isUpdateUserSuccess, isDeleteMultipleUsersSuccess } = useSelector(
     (state: RootState) => state.users
   );
   const onClose = () => {
     dispatch(setDeleteUserStatus(false));
     dispatch(setUpdateUserStatus(false));
+    dispatch(setDeleteMultipleUsersStatus(false));
   };
 
-  console.log("isDeleteUserSuccess:", isUpdateUserSuccess);
+  console.log("isDeleteMultipleUsersSuccess:", isDeleteMultipleUsersSuccess);
   return (
     <>
       {isDeleteUserSuccess && (
@@ -27,6 +32,19 @@ const Admin: React.FC = () => {
           color="success"
           autoHideDuration={3000}
           open={isDeleteUserSuccess}
+          onClose={onClose}
+        />
+      )}
+
+      {isDeleteMultipleUsersSuccess && (
+        <Snackbar
+          message="Users deleted successfully!"
+          vertical="top"
+          horizontal="center"
+          variant="soft"
+          color="success"
+          autoHideDuration={3000}
+          open={isDeleteMultipleUsersSuccess}
           onClose={onClose}
         />
       )}

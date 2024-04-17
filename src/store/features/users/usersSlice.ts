@@ -137,6 +137,12 @@ const usersSlice = createSlice({
     setDeleteUserStatus: (state, action: PayloadAction<boolean>) => {
       state.isDeleteUserSuccess = action.payload;
     },
+    setDeleteMultipleUsersStatus: (state, action: PayloadAction<boolean>) => {
+      state.isDeleteMultipleUsersSuccess = action.payload;
+    },
+    setUpdateUserStatus: (state, action: PayloadAction<boolean>) => {
+      state.isUpdateUserSuccess = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // Fetch users
@@ -211,6 +217,8 @@ export const {
   setErrorMsg,
   setSuccess,
   setDeleteUserStatus,
+  setDeleteMultipleUsersStatus,
+  setUpdateUserStatus,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

@@ -13,8 +13,13 @@ const App: React.FC = () => {
 
 export default App
 
-// statemanagement for server side rendering and API calls
+/**
+ * statemanagement for server side rendering and API calls
+ *  */
+
 // import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 // import './App.css'
 // import Admin from './pages/Admin.page'
 // import { store } from './store'
@@ -28,6 +33,7 @@ export default App
 //     <Provider store={store}>
 //       <QueryClientProvider client={queryClient}>
 //         <Admin />
+//         <ReactQueryDevtools initialIsOpen={false} />
 //       </QueryClientProvider>
 //     </Provider>
 //   )

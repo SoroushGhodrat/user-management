@@ -29,7 +29,7 @@ export const usersService = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),
   tagTypes: ['Users'],
   endpoints: (builder) => ({
-    fetchUsers: builder.query<User[], void>({
+    getAllUsers: builder.query<User[], void>({
       query: () => 'DUMMY_USERS',
     }),
   }),
@@ -182,7 +182,7 @@ const usersSlice = createSlice({
         state.isError = true
       })
     // Fetch users from API
-    builder.addMatcher(usersService.endpoints.fetchUsers.matchFulfilled, (state, action) => {
+    builder.addMatcher(usersService.endpoints.getAllUsers.matchFulfilled, (state, action) => {
       state.users = action.payload
     })
   },
@@ -221,4 +221,4 @@ export default usersSlice.reducer
  * - dataUpdatedAt
  * - errorUpdatedAt
  */
-export const { useFetchUsersQuery } = usersService
+export const { useGetAllUsersQuery } = usersService

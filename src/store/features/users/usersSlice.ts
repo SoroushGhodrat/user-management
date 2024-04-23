@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 import { User } from '@/models/user'
-import { AxiosResponse } from 'axios'
 interface UsersState {
   users: User[]
   isLoading: boolean
@@ -24,16 +24,15 @@ const initialState: UsersState = {
   isUpdateUserSuccess: false,
 }
 
-// Async thunk for fetching users
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await new Promise<AxiosResponse<User[]>>((resolve) =>
-    setTimeout(async () => {
-      const result = await axios.get<User[]>('http://localhost:8000/DUMMY_USERS')
-      resolve(result)
-    }, 2000),
-  )
-
-  return response.data
+export const usersService = createApi({
+  reducerPath: 'usersService',
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),
+  tagTypes: ['Users'],
+  endpoints: (builder) => ({
+    fetchUsers: builder.query<User[], void>({
+      query: () => 'DUMMY_USERS',
+    }),
+  }),
 })
 
 // Async thunk for updating user
@@ -136,21 +135,6 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Fetch users
-    builder
-      .addCase(fetchUsers.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = action.payload
-        state.isLoading = false
-        state.isSuccess = true
-      })
-      .addCase(fetchUsers.rejected, (state, action) => {
-        state.isLoading = false
-        state.isError = true
-        state.errorMessage = action.error.message
-      })
     // Update user
     builder
       .addCase(updateUser.pending, (state) => {
@@ -197,6 +181,10 @@ const usersSlice = createSlice({
         state.isLoading = false
         state.isError = true
       })
+    // Fetch users from API
+    builder.addMatcher(usersService.endpoints.fetchUsers.matchFulfilled, (state, action) => {
+      state.users = action.payload
+    })
   },
 })
 
@@ -211,3 +199,26 @@ export const {
 } = usersSlice.actions
 
 export default usersSlice.reducer
+
+/*
+ * Export hooks for usage in functional components, which are
+ * auto-generated based on the defined endpoints.
+ *
+ * You can destructure the following properties:
+ * - data: users
+ * - isLoading
+ * - isError
+ * - error
+ * - isFetching
+ * - isSuccess
+ * - refetch
+ * - status
+ * - isUninitialized
+ * - isFulfilled
+ * - isIdle
+ * - isStale
+ * - originalArgs
+ * - dataUpdatedAt
+ * - errorUpdatedAt
+ */
+export const { useFetchUsersQuery } = usersService

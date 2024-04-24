@@ -98,7 +98,7 @@ const TableRow: React.FC<{
                 label=''
                 variant='outlined'
                 size='sm'
-                // checked={isRowSelected}
+                checked={selectedRows[user.id] || false}
                 onChange={handleCheckboxChange}
               />
             </td>

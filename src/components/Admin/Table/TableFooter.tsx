@@ -3,7 +3,7 @@ import { Box, FormControl, IconButton, Select, Typography, Option } from '@mui/j
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import { useEffect } from 'react'
-import { RootState } from '@/store'
+import { AppDispatch, RootState } from '@/store'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setCurrentPage,
@@ -15,7 +15,7 @@ interface TableHeaderProps {
 }
 
 const TableFooter: React.FC<TableHeaderProps> = ({ users }) => {
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const currentPage = useSelector((state: RootState) => state.pagination.currentPage)
   const rowsPerPage = useSelector((state: RootState) => state.pagination.rowsPerPage)
 

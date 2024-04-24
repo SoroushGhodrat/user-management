@@ -57,9 +57,7 @@ const UserManagement: React.FC = () => {
             <Users />
           </TabPanel>
 
-          <TabPanel value={1}>
-            <UserRoles />
-          </TabPanel>
+          <TabPanel value={1}>{/* <UserRoles /> */}</TabPanel>
         </Box>
       </Tabs>
     </Box>

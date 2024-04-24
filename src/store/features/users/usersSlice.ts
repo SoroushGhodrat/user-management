@@ -24,6 +24,7 @@ const initialState: UsersState = {
   isUpdateUserSuccess: false,
 }
 
+// Create a service using createApi from RTK Query to fetch users from the API
 export const usersService = createApi({
   reducerPath: 'usersService',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8000/' }),

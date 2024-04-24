@@ -25,7 +25,7 @@ import { TabName } from '@/models/user'
 const TableRow: React.FC<{
   user: User
   handleMultipleDelete?: (id: string) => void
-  isRowSelected?: any
+  isRowSelected: boolean
   toggleRowSelected: () => void
   selectedRows: Record<string, boolean>
 }> = ({ user, toggleRowSelected, selectedRows }) => {

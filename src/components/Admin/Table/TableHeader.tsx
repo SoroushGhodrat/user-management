@@ -41,14 +41,8 @@ const TableHeader = () => {
           <PeopleOutline />
           <Typography level='title-lg'>{tabName === 'users' ? 'Users' : 'User Roles'}</Typography>
         </Box>
-        {tabName === 'users' && (
-          <Button sx={{ backgroundColor: '#3E8A8B' }} onClick={openInviteModal}>
-            Invite users
-          </Button>
-        )}
-        {tabName === 'userRoles' && (
-          <Button sx={{ backgroundColor: '#3E8A8B' }}>New user role</Button>
-        )}
+        {tabName === 'users' && <Button onClick={openInviteModal}>Invite users</Button>}
+        {tabName === 'userRoles' && <Button>New user role</Button>}
       </Box>
       <Divider />
     </>

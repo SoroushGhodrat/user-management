@@ -136,9 +136,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) 
         </FormControl>
 
         <DialogActions>
-          <Button sx={{ backgroundColor: '#3E8A8B' }} variant='solid' onClick={handleUpdateUser}>
-            Update
-          </Button>
+          <Button onClick={handleUpdateUser}>Update</Button>
           <Button variant='outlined' color='neutral' onClick={onClose}>
             Cancle
           </Button>

@@ -42,10 +42,12 @@ const UsersTable = () => {
     dispatch(setSelectedRows(newSelectedRows))
   }
 
+  // Render skeleton loader while fetching data
   if (isLoading) {
     return <CustomSkeleton />
   }
 
+  // Check if an error occurred while fetching data to display an error message and retry button
   if (isError) {
     // Type guard to check if error is of type FetchBaseQueryError
     if ('status' in error) {
@@ -53,9 +55,7 @@ const UsersTable = () => {
       return (
         <div>
           <h2>Error occurred while fetching users</h2>
-          <Button sx={{ backgroundColor: '#3E8A8B' }} onClick={() => refetch()}>
-            Retry
-          </Button>
+          <Button onClick={() => refetch()}>Retry</Button>
         </div>
       )
     } else {

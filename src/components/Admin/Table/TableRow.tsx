@@ -21,6 +21,7 @@ import UserDeleteModal from '../UserDeleteModal'
 import EditUserModal from '../EditUserModal'
 import UserInvitedModal from '../UserInvitedModal'
 import { TabName } from '@/models/user'
+import EditUserPermissionModal from '../EditUserPermissionModal'
 
 const TableRow: React.FC<{
   user: User
@@ -34,10 +35,11 @@ const TableRow: React.FC<{
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
+  const [isEditPermissionModalOpen, setIsEditPermissionModalOpen] = useState(false)
   const [resendEmail, setResendEmail] = useState<string>('')
   const [selectedIds, setSelectedIds] = useState<string[]>([])
 
-  const tabName = (localStorage.getItem('tabName') as TabName) || 'users'
+  const tabName = (localStorage.getItem('tab_name') as TabName) || 'users'
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true)
@@ -50,6 +52,10 @@ const TableRow: React.FC<{
   const openInviteModal = (email: string) => {
     setIsInviteModalOpen(true)
     setResendEmail(email)
+  }
+
+  const openEditPermissionModal = () => {
+    setIsEditPermissionModalOpen(true)
   }
 
   const handleMultipleDelete = (id: string) => {
@@ -89,6 +95,13 @@ const TableRow: React.FC<{
         isOpen={isInviteModalOpen}
         onClose={() => setIsInviteModalOpen(false)}
       />
+
+      <EditUserPermissionModal
+        isOpen={isEditPermissionModalOpen}
+        onClose={() => setIsEditPermissionModalOpen(false)}
+      />
+
+      {/* <EditUserPermissionModal /> */}
 
       <tr key={id} style={{ backgroundColor: user.id in selectedRows ? '#e1eded' : '' }}>
         {tabName === 'users' && (
@@ -173,16 +186,18 @@ const TableRow: React.FC<{
             <td>
               <Checkbox label='' variant='outlined' size='sm' />
             </td>
-            <td>{role}</td>
+            <td>{firstLetterUppercase(role)}</td>
             <td style={{ width: 'auto' }}>{dateFormater(createdOn)}</td>
-            <td>{status}</td>
+            <td>
+              <StatusChip status={status}>{status}</StatusChip>
+            </td>
             <td>
               <Dropdown>
                 <MenuButton slots={{ root: IconButton }} slotProps={{ root: { color: 'neutral' } }}>
                   <MoreVert />
                 </MenuButton>
                 <Menu placement='bottom-end'>
-                  <MenuItem>
+                  <MenuItem onClick={openEditPermissionModal}>
                     <ListItemDecorator>
                       <Edit />
                     </ListItemDecorator>
@@ -193,7 +208,7 @@ const TableRow: React.FC<{
                     <ListItemDecorator sx={{ color: 'inherit' }}>
                       <DeleteForever />
                     </ListItemDecorator>
-                    Delete
+                    View permissions
                   </MenuItem>
                 </Menu>
               </Dropdown>

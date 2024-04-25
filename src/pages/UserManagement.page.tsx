@@ -9,8 +9,8 @@ const UserManagement: React.FC = () => {
 
   const handleTabNameChange = (value: number) => {
     value === 0
-      ? localStorage.setItem('tab name', 'users')
-      : localStorage.setItem('tab name', 'userRoles')
+      ? localStorage.setItem('tab_name', 'users')
+      : localStorage.setItem('tab_name', 'userRoles')
   }
 
   return (
@@ -57,7 +57,9 @@ const UserManagement: React.FC = () => {
             <Users />
           </TabPanel>
 
-          <TabPanel value={1}>{/* <UserRoles /> */}</TabPanel>
+          <TabPanel value={1}>
+            <UserRoles />
+          </TabPanel>
         </Box>
       </Tabs>
     </Box>

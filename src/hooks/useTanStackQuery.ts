@@ -1,11 +1,11 @@
-import axios from "axios";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import axios from 'axios'
+import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 interface UseTanStackQueryProps {
-  queryKey: string;
-  API: string;
-  retry: number;
-  gcTime: number;
+  queryKey: string
+  API: string
+  retry: number
+  gcTime: number
 }
 
 //  in case if we want to use React Query instead of Redux
@@ -15,26 +15,26 @@ const useTanStackQuery = ({ queryKey, API, retry, gcTime }: UseTanStackQueryProp
     queryFn: async () => {
       const response = await new Promise((resolve) => {
         setTimeout(async () => {
-          const { data } = await axios.get(API);
-          resolve(data);
-        }, 3000); // 3 seconds delay to fetch the data
-      });
+          const { data } = await axios.get(API)
+          resolve(data)
+        }, 3000) // 3 seconds delay to fetch the data
+      })
 
-      return response;
+      return response
     },
     placeholderData: keepPreviousData,
     retry,
     gcTime,
-  });
-};
+  })
+}
 
-export default useTanStackQuery;
+export default useTanStackQuery
 
 // Documentation
 /**
  * How to use this hook:
  *  import useTanStackQuery from '@/hooks/useTanStackQuery
- * 
+ *
  *  const { data } = useTanStackQuery({
  *   queryKey: 'myData',
  *   API: 'http://localhost:8000/DUMMY_USERS',

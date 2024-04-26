@@ -1,14 +1,14 @@
-import "./App.css";
-import Admin from "./pages/Admin.page";
-import { store } from "./store";
-import { Provider } from "react-redux";
+import './App.css'
+import Admin from './pages/Admin.page'
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Admin />
     </Provider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

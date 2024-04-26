@@ -10,88 +10,83 @@ import {
   Modal,
   ModalDialog,
   Typography,
-} from "@mui/joy";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import ClearIcon from "@mui/icons-material/Clear";
-import { User } from "@/models/user";
-import { useDispatch } from "react-redux";
-import {
-  deleteUser,
-  setDeleteUserStatus,
-} from "@/store/features/users/usersSlice";
-import { AppDispatch } from "@/store";
+} from '@mui/joy'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import ClearIcon from '@mui/icons-material/Clear'
+import { User } from '@/models/user'
+import { useDispatch } from 'react-redux'
+import { deleteMultipleUsers, deleteUser } from '@/store/features/users/usersSlice'
+
+import { setSelectedRows } from '@/store/features/table/selectedRowsSlice'
+import { AppDispatch } from '@/store'
 
 type UserDeleteModalProps = {
-  isOpen: boolean;
-  onClose: () => void;
-  user: User;
-};
+  isOpen: boolean
+  onClose: () => void
+  user: User[] | Record<string, boolean> | User
+}
 
-const UserDeleteModal: React.FC<UserDeleteModalProps> = ({
-  isOpen,
-  onClose,
-  user,
-}) => {
-  const dispatch: AppDispatch = useDispatch();
+const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user }) => {
+  const dispatch: AppDispatch = useDispatch()
+
+  const userIds = Array.isArray(user) ? user.map((_user) => _user.id) : []
 
   const handleDeleteUser = (userId: string) => {
-    dispatch(deleteUser(userId));
-    dispatch(setDeleteUserStatus(true));
-  };
+    if (Array.isArray(user)) {
+      dispatch(deleteMultipleUsers(userIds))
+      dispatch(setSelectedRows({}))
+    } else {
+      dispatch(deleteUser(userId))
+    }
+  }
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <ModalDialog
-        variant="outlined"
-        role="alertdialog"
-        size={"lg"}
-        sx={{ p: 3, minWidth: 500 }}
-      >
+      <ModalDialog variant='outlined' role='alertdialog' size={'lg'} sx={{ p: 3, minWidth: 500 }}>
         <DialogTitle
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <DeleteOutlineIcon sx={{ pr: 1 }} />
-            Delete: {user.name} {user.family}
+            {Array.isArray(user) && user.length > 1 && 'Delete Multiple Users'}
+            {Array.isArray(user) &&
+              user.length === 1 &&
+              `Delete: ${user[0].name} ${user[0].family}`}
+            {!Array.isArray(user) && `${user.name} ${user.family}`}
           </Box>
-          <ClearIcon onClick={onClose} sx={{ pr: 1, cursor: "pointer" }} />
+          <ClearIcon onClick={onClose} sx={{ pr: 1, cursor: 'pointer' }} />
         </DialogTitle>
 
-        <Divider inset="none" />
+        <Divider inset='none' />
 
         <DialogContent>Are you sure you want to delete:</DialogContent>
 
-        <List marker="circle">
-          <ListItem>
-            {user.name} {user.family}
-          </ListItem>
+        <List marker='circle'>
+          {Array.isArray(user) ? (
+            user.map((u) => <ListItem key={u.id}>{`${u.name} ${u.family}`}</ListItem>)
+          ) : (
+            <ListItem>{`${user.name} ${user.family}`}</ListItem>
+          )}
         </List>
 
         <DialogContent>
-          <Typography color="danger">
-            NOTE: This action is permanent.
-          </Typography>
+          <Typography color='danger'>NOTE: This action is permanent.</Typography>
         </DialogContent>
 
         <DialogActions>
-          <Button
-            variant="solid"
-            color="danger"
-            onClick={() => handleDeleteUser(user.id)}
-          >
+          <Button variant='solid' color='danger' onClick={() => handleDeleteUser(user.id)}>
             Yes, delete
           </Button>
-          <Button variant="outlined" color="neutral" onClick={onClose}>
+          <Button variant='outlined' color='neutral' onClick={onClose}>
             Cancle
           </Button>
         </DialogActions>
       </ModalDialog>
     </Modal>
-  );
-};
+  )
+}
 
-export default UserDeleteModal;
+export default UserDeleteModal

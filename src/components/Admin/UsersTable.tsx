@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store'
-import { Table } from '@mui/joy'
-import { fetchUsers } from '@/store/features/users/usersSlice'
+import { Button, Table } from '@mui/joy'
 import { setSelectedRows } from '@/store/features/table/selectedRowsSlice'
-
+import { useGetAllUsersQuery } from '@/store/features/users/usersSlice'
+import CustomSkeleton from '@/components/UI/CustomSkeleton'
 import TableRow from './Table/TableRow'
 import TableFooter from './Table/TableFooter'
 import TableColumnsName from './Table/TableColumnsName'
@@ -14,12 +13,18 @@ import TableMultipleDelete from './Table/TableMultipleDelete'
 
 const UsersTable = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { users } = useSelector((state: RootState) => state.users)
   const selectedRows = useSelector((state: RootState) => state.table.selectedRows)
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
+  const currentPage = useSelector((state: RootState) => state.pagination.currentPage)
+  const rowsPerPage = useSelector((state: RootState) => state.pagination.rowsPerPage)
 
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage)
+  // Using a query hook automatically fetches data and returns query values
+  const { data: users = [], isLoading, isError, error, refetch } = useGetAllUsersQuery()
+
+  // Slice the users array to get the users on the current page
+  const usersOnCurrentPage = users?.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage,
+  )
 
   // Check if any row is selected or not
   const areRowsSelected = Object.keys(selectedRows).length > 0
@@ -36,9 +41,28 @@ const UsersTable = () => {
     // Dispatch setSelectedRows
     dispatch(setSelectedRows(newSelectedRows))
   }
-  useEffect(() => {
-    dispatch(fetchUsers())
-  }, [dispatch])
+
+  // Render skeleton loader while fetching data
+  if (isLoading) {
+    return <CustomSkeleton />
+  }
+
+  // Check if an error occurred while fetching data to display an error message and retry button
+  if (isError) {
+    // Type guard to check if error is of type FetchBaseQueryError
+    if ('status' in error) {
+      console.warn('Error Details:', error)
+      return (
+        <div>
+          <h2>Error occurred while fetching users</h2>
+          <Button onClick={() => refetch()}>Retry</Button>
+        </div>
+      )
+    } else {
+      // Handle other types of errors (e.g., SerializedError)
+      return <div>An unexpected error occurred.</div>
+    }
+  }
 
   return (
     <>

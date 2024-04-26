@@ -5,7 +5,7 @@ import { useState } from 'react'
 import UserInvitedModal from '../UserInvitedModal'
 
 const TableHeader = () => {
-  const tabName = (localStorage.getItem('tabName') as TabName) || 'users'
+  const tabName = (localStorage.getItem('tab_name') as TabName) || 'users'
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
 
   const openInviteModal = () => {
@@ -39,16 +39,10 @@ const TableHeader = () => {
             gap: 2,
           }}>
           <PeopleOutline />
-          <Typography level='title-lg'>{tabName === 'users' ? 'Users' : 'User roles'}</Typography>
+          <Typography level='title-lg'>{tabName === 'users' ? 'Users' : 'User Roles'}</Typography>
         </Box>
-        {
-          <Button sx={{ backgroundColor: '#3E8A8B' }} onClick={openInviteModal}>
-            Invite users
-          </Button>
-        }
-        {tabName === 'userRoles' && (
-          <Button sx={{ backgroundColor: '#3E8A8B' }}>New user role</Button>
-        )}
+        {tabName === 'users' && <Button onClick={openInviteModal}>Invite users</Button>}
+        {tabName === 'userRoles' && <Button>New user role</Button>}
       </Box>
       <Divider />
     </>

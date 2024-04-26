@@ -3,6 +3,9 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { useState } from 'react'
 import UserDeleteModal from '../UserDeleteModal'
 import { User } from '@/models/user'
+import { setSelectedRows } from '@/store/features/table/selectedRowsSlice'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '@/store'
 
 interface SelectedRows {
   selectedRows: Record<string, boolean>
@@ -11,12 +14,18 @@ interface SelectedRows {
 }
 
 const TableMultipleDelete: React.FC<SelectedRows> = ({ users, selectedRows }) => {
+  const dispatch: AppDispatch = useDispatch()
+
   const userIds = Object.keys(selectedRows)
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const openDeleteModal = () => {
     setIsDeleteModalOpen(true)
+  }
+
+  const closeMultipleDeleteRow = () => {
+    dispatch(setSelectedRows({}))
   }
 
   const filterSelectedUsers = users.filter((user) => selectedRows[user.id])
@@ -43,14 +52,20 @@ const TableMultipleDelete: React.FC<SelectedRows> = ({ users, selectedRows }) =>
           {`${userIds.length} ${userIds.length !== 1 ? 'rows' : 'row'} selected`}
         </Typography>
 
-        <Button
-          sx={{ m: 2 }}
-          color='danger'
-          variant='soft'
-          onClick={openDeleteModal}
-          startDecorator={<DeleteOutlineOutlinedIcon />}>
-          Delete
-        </Button>
+        <Box sx={{ display: 'flex' }}>
+          <Button sx={{ m: 2 }} color='neutral' variant='soft' onClick={closeMultipleDeleteRow}>
+            Cancle
+          </Button>
+
+          <Button
+            sx={{ m: 2 }}
+            color='danger'
+            variant='soft'
+            onClick={openDeleteModal}
+            startDecorator={<DeleteOutlineOutlinedIcon />}>
+            Delete
+          </Button>
+        </Box>
       </Box>
     </>
   )

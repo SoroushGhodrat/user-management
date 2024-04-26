@@ -23,13 +23,13 @@ import { AppDispatch } from '@/store'
 type UserDeleteModalProps = {
   isOpen: boolean
   onClose: () => void
-  user: User
+  user: User[] | Record<string, boolean> | User
 }
 
 const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch: AppDispatch = useDispatch()
 
-  const userIds = Array.isArray(user) ? user.map((u) => u.id) : []
+  const userIds = Array.isArray(user) ? user.map((_user) => _user.id) : []
 
   const handleDeleteUser = (userId: string) => {
     if (Array.isArray(user)) {

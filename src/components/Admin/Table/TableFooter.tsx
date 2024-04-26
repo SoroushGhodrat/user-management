@@ -2,32 +2,46 @@ import { User } from '@/models/user'
 import { Box, FormControl, IconButton, Select, Typography, Option } from '@mui/joy'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
-import { useState } from 'react'
-
+import { useEffect } from 'react'
+import { AppDispatch, RootState } from '@/store'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+  setCurrentPage,
+  setRowsPerPage,
+  setTotalPages,
+} from '@/store/features/table/paginationSlice'
 interface TableHeaderProps {
   users: User[]
 }
 
 const TableFooter: React.FC<TableHeaderProps> = ({ users }) => {
-  const [pageNumber, setPageNumber] = useState<number>(1)
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10)
+  const dispatch: AppDispatch = useDispatch()
+  const currentPage = useSelector((state: RootState) => state.pagination.currentPage)
+  const rowsPerPage = useSelector((state: RootState) => state.pagination.rowsPerPage)
 
+  // Calculate the start and end of the current page
+  const start = Math.min((currentPage - 1) * rowsPerPage + 1, users.length)
+  const end = Math.min(currentPage * rowsPerPage, users.length)
+
+  // Update the current page whenever the users change
   const handleChangePage = (newPage: number) => {
-    setPageNumber(newPage)
+    dispatch(setCurrentPage(newPage))
   }
-
+  // Update the total pages whenever the users change
   const handleChangeRowsPerPage = (
     _event: React.MouseEvent | React.KeyboardEvent | React.FocusEvent | null,
     value: number | null,
   ) => {
-    setRowsPerPage(value as number)
+    dispatch(setRowsPerPage(value as number))
   }
 
-  const usersOnCurrentPage = users.slice((pageNumber - 1) * rowsPerPage, pageNumber * rowsPerPage)
+  // Update the total pages whenever the users change
+  useEffect(() => {
+    dispatch(setTotalPages(Math.ceil(users.length / 10)))
+  }, [users, dispatch])
 
   return (
     <tr>
-      {/* <td colSpan={headers.length} style={{ backgroundColor: "white" }}> */}
       <td colSpan={8} style={{ backgroundColor: 'white' }}>
         <Box
           sx={{
@@ -38,31 +52,26 @@ const TableFooter: React.FC<TableHeaderProps> = ({ users }) => {
             backgroundColor: 'white',
             px: 2,
           }}>
-          <Typography>
-            {`Showing ${(pageNumber - 1) * rowsPerPage + 1} to ${Math.min(
-              pageNumber * rowsPerPage,
-              users.length,
-            )} of ${users.length}`}
-          </Typography>
+          <Typography>{`Showing ${start} to ${end} of ${users.length}`}</Typography>
 
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             <IconButton
               size='sm'
               color='neutral'
               variant='plain'
-              disabled={pageNumber === 1}
-              onClick={() => handleChangePage(pageNumber - 1)}
+              disabled={currentPage === 1}
+              onClick={() => handleChangePage(currentPage - 1)}
               sx={{ bgcolor: 'background.surface' }}>
               <KeyboardArrowLeftIcon />
               <Typography>Back</Typography>
             </IconButton>
-            <Typography>{pageNumber}</Typography>
+            <Typography>{currentPage}</Typography>
             <IconButton
               size='sm'
               color='neutral'
               variant='plain'
-              disabled={pageNumber >= Math.ceil(users.length / rowsPerPage)}
-              onClick={() => handleChangePage(pageNumber + 1)}
+              disabled={end >= users.length}
+              onClick={() => handleChangePage(currentPage + 1)}
               sx={{ bgcolor: 'background.surface' }}>
               <Typography>Next</Typography>
               <KeyboardArrowRightIcon />

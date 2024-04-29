@@ -29,7 +29,7 @@ type UserDeleteModalProps = {
 const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch: AppDispatch = useDispatch()
 
-const userIds = Array.isArray(user) ? user.map((_user: User) => _user.id) : [];
+  const userIds = Array.isArray(user) ? user.map((_user: User) => _user.id) : []
 
   const handleDeleteUser = (userId: string) => {
     if (Array.isArray(user)) {

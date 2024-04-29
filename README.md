@@ -71,3 +71,30 @@ This project uses the following dependencies:
 - `Typescript`: Version 5.2.2
 - `Vite`: Version 5.2.0
 - `React query`: Version 5.29.0
+
+## Testing Libraries
+
+This project uses the following testing libraries:
+
+- **Vitest**: A high-performance test runner for Vite projects. It natively supports ESM, TypeScript, and JSX, providing a seamless testing experience.
+- **React Testing Library**: This library offers a lightweight, yet powerful solution for testing React components. It builds on `react-dom` and `react-dom/test-utils` to encourage good testing practices.
+- **jsdom**: Jsdom is a pure JavaScript implementation of various web standards. It's used in this project to simulate a web browser environment for more realistic testing in Node.js.
+- **jest-dom**: This library provides a set of custom matchers that allow you to write more expressive and effective assertions against the DOM. For instance, you can verify if an element is present in the DOM or if it contains the expected content.
+
+## Running Tests
+
+You can run tests either via the terminal or a user interface.
+
+### Terminal
+
+To run tests in the terminal, use the following command:
+
+```bash
+npm run test
+```
+
+To run tests in via UI, use the following command:
+
+```bash
+npm run test:ui
+```

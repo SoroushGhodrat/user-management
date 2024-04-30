@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from '@mui/joy'
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import { useState } from 'react'
-import UserDeleteModal from '../UserDeleteModal'
+import UserDeleteModal from '../UserManagement/UserDetails/UserDeleteModal'
 import { User } from '@/models/user'
 import { setSelectedRows } from '@/store/features/table/selectedRowsSlice'
 import { useDispatch } from 'react-redux'

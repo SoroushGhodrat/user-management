@@ -2,7 +2,7 @@ import { TabName } from '@/models/user'
 import { PeopleOutline } from '@mui/icons-material'
 import { Box, Button, Divider, Typography } from '@mui/joy'
 import { useState } from 'react'
-import UserInvitedModal from '../UserInvitedModal'
+import UserInvitedModal from '../UserManagement/UserDetails/UserInvitedModal'
 
 const TableHeader = () => {
   const tabName = (localStorage.getItem('tab_name') as TabName) || 'users'

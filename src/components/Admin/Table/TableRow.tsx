@@ -17,11 +17,11 @@ import { DeleteForever, Edit, MoreVert, Person, ForwardToInboxOutlined } from '@
 import { User } from '@/models/user'
 import { phoneFormater, dateFormater, firstLetterUppercase } from '@/utils/helpers/index'
 import StatusChip from '@/components/UI/StatusChip'
-import UserDeleteModal from '../UserDeleteModal'
-import EditUserModal from '../EditUserModal'
-import UserInvitedModal from '../UserInvitedModal'
+import UserDeleteModal from '../UserManagement/UserDetails/UserDeleteModal'
+import EditUserModal from '../UserManagement/UserDetails/EditUserModal'
+import UserInvitedModal from '../UserManagement/UserDetails/UserInvitedModal'
 import { TabName } from '@/models/user'
-import EditUserPermissionModal from '../EditUserPermissionModal'
+import EditUserPermissionModal from '../UserManagement/UserRoles/EditUserPermissionModal'
 
 const TableRow: React.FC<{
   user: User

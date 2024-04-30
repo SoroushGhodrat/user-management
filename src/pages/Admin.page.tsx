@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/joy'
-import UserManagement from './UserManagement.page'
+import UserManagement from '@/components/Admin/UserManagement/UserManagement'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store'
 import {
@@ -8,6 +8,7 @@ import {
   setUpdateUserStatus,
 } from '@/store/features/users/usersSlice'
 import Snackbar from '@/components/UI/SnackBar'
+import UsersFilters from '@/components/Admin/UsersFilters/UsersFilters'
 
 const Admin: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -69,6 +70,7 @@ const Admin: React.FC = () => {
             Invite, manage and update users.
           </Typography>
         </header>
+        <UsersFilters />
         <UserManagement />
       </Box>
     </>

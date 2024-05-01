@@ -53,7 +53,7 @@ const TableMultipleDelete: React.FC<SelectedRows> = ({ users, selectedRows }) =>
         </Typography>
 
         <Box sx={{ display: 'flex' }}>
-          <Button sx={{ m: 2 }} color='neutral' variant='soft' onClick={closeMultipleDeleteRow}>
+          <Button sx={{ m: 2 }} color='neutral' variant='outlined' onClick={closeMultipleDeleteRow}>
             Cancle
           </Button>
 

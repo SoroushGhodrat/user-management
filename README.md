@@ -38,7 +38,7 @@ cd user-management
 npm install
 ```
 
-### Running the Project
+## Running the Project
 
 To run the project, use the following command:
 

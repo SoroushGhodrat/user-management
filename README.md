@@ -40,19 +40,13 @@ npm install
 
 ### Running the Project
 
-To run this project, follow these steps:
-
-1. Start the JSON Server:
+To run the project, use the following command:
 
 ```bash
-npm run server
+npm start
 ```
 
-2. In a new terminal window, navigate back to the project directory and start the app:
-
-```bash
-npm run dev
-```
+This command will concurrently start both the JSON Server and the application. This allows the server and the application to run simultaneously, streamlining your development process.
 
 ## About User Data
 

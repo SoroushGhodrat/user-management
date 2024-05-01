@@ -15,7 +15,11 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import ClearIcon from '@mui/icons-material/Clear'
 import { User } from '@/models/user'
 import { useDispatch } from 'react-redux'
-import { deleteMultipleUsers, deleteUser } from '@/store/features/users/usersSlice'
+import {
+  deleteMultipleUsers,
+  deleteUser,
+  useGetAllUsersQuery,
+} from '@/store/features/users/usersSlice'
 
 import { setSelectedRows } from '@/store/features/table/selectedRowsSlice'
 import { AppDispatch } from '@/store'
@@ -28,6 +32,7 @@ type UserDeleteModalProps = {
 
 const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch: AppDispatch = useDispatch()
+  const { refetch } = useGetAllUsersQuery()
 
   const userIds = Array.isArray(user) ? user.map((_user: User) => _user.id) : []
 
@@ -35,8 +40,10 @@ const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user
     if (Array.isArray(user)) {
       dispatch(deleteMultipleUsers(userIds))
       dispatch(setSelectedRows({}))
+      refetch()
     } else {
       dispatch(deleteUser(userId))
+      refetch()
       onClose()
     }
   }
@@ -65,6 +72,7 @@ const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user
 
         <DialogContent>Are you sure you want to delete:</DialogContent>
 
+        {/* List of user(s) to be deleted */}
         <List marker='circle'>
           {Array.isArray(user) ? (
             user.map((u) => <ListItem key={u.id}>{`${u.name} ${u.family}`}</ListItem>)

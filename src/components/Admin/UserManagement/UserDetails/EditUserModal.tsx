@@ -16,7 +16,7 @@ import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRen
 import ClearIcon from '@mui/icons-material/Clear'
 import { User } from '@/models/user'
 import { useDispatch } from 'react-redux'
-import { updateUser } from '@/store/features/users/usersSlice'
+import { updateUser, useGetAllUsersQuery } from '@/store/features/users/usersSlice'
 import { Role } from '@/models/user'
 import { useState } from 'react'
 import { AppDispatch } from '@/store'
@@ -32,6 +32,7 @@ const role: Role[] = ['admin', 'electrician', 'project manager', 'technical mana
 
 const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) => {
   const dispatch = useDispatch<AppDispatch>()
+  const { refetch } = useGetAllUsersQuery()
 
   const [formValues, setFormValues] = useState({
     name: user.name,
@@ -64,6 +65,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ isOpen, onClose, user }) 
       ...formValues,
     }
     dispatch(updateUser(updatedUser))
+    refetch()
     onClose()
   }
 

@@ -59,11 +59,11 @@ const UserDeleteModal: React.FC<UserDeleteModalProps> = ({ isOpen, onClose, user
           }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <DeleteOutlineIcon sx={{ pr: 1 }} />
-            {Array.isArray(user) && user.length > 1 && 'Delete Multiple Users'}
-            {Array.isArray(user) &&
-              user.length === 1 &&
-              `Delete: ${user[0].name} ${user[0].family}`}
-            {!Array.isArray(user) && `${user.name} ${user.family}`}
+            {Array.isArray(user)
+              ? user.length > 1
+                ? 'Delete Multiple Users'
+                : `Delete: ${user[0].name} ${user[0].family}`
+              : `Delete: ${user.name} ${user.family}`}
           </Box>
           <ClearIcon onClick={onClose} sx={{ pr: 1, cursor: 'pointer' }} />
         </DialogTitle>

@@ -2,7 +2,7 @@
 
 **Project Case:** User Management Simplified
 
-**User Story:** As the administrator of a corporate account within SmartCraft Electro, I need a seamless way to manage user access and permissions related to our company's data. This capability is crucial for efficiently overseeing and controlling the distribution of responsibilities and access rights within our system. By doing so, we can ensure the integrity of our data and facilitate optimal operational workflows.
+**User Story:** As the administrator of a corporate account, we need a seamless way to manage user access and permissions related to our company's data. This capability is crucial for efficiently overseeing and controlling the distribution of responsibilities and access rights within our system. By doing so, we can ensure the integrity of our data and facilitate optimal operational workflows.
 
 ## Prerequisites
 
